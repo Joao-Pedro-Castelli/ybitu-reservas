@@ -1,46 +1,40 @@
-@import './style.scss';
-
-.etapa.done {
-  background-image: url("/src/assets/seta_data_verde.svg");
-}
-
-.etapa.on-going {
-  background-image: url("/src/assets/seta_data_amarelo.svg");
-}
-
-.etapa.not-yet {
-  background-image: url("/src/assets/seta_pagamento_cinza.svg");
-}
+@use "./style.scss";
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
 
 
 section#quartos-carousel {
   margin: 10px auto 60px auto;
 }
 
+$img-height: 240px;
+$aba-width: $img-height * (4/3);
+
 .aba {
-  --img-height: 240px;
-  --aba-width: var(--img-height) * (4/3);
+  $box-color: #D9D9D9;
+
   display: grid;
   place-items: stretch;
-  grid-template-columns: calc((4/10) * var(--aba-width)) calc((6/10) * var(--aba-width));
-  grid-template-rows: var(--img-height) auto auto;
+  grid-template-columns: calc((4/10) * $aba-width) calc((6/10) * $aba-width);
+  grid-template-rows: $img-height auto auto;
   grid-template-areas:
     'imagem-quarto imagem-quarto'
     'info info'
     'numerador contador';
 
   margin: 24px auto;
-  padding: 25px min(25px, 50vw - (var(--aba-width) / 2));
-  max-width: calc(var(--aba-width) + (2 * 25px));
+  padding: 25px min(25px, 50vw - ($aba-width / 2));
+  max-width: calc($aba-width + (2 * 25px));
   /*294 + padding*/
 
   border-radius: 20px;
-  background-color: var(--cor-background);
+  background-color: style.$cor-background;
   box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.35);
 
   img {
     grid-area: imagem-quarto;
-    width: var(--aba-width);
+    width: $aba-width;
     height: 100%;
     border-radius: 20px;
   }
@@ -63,7 +57,7 @@ section#quartos-carousel {
     grid-area: info;
 
     margin: 20px 0 8px 0;
-    background-color: #D9D9D9;
+    background-color: $box-color;
     border-radius: 20px;
     padding: 12px 0 18px 0;
 
@@ -76,6 +70,7 @@ section#quartos-carousel {
 
     ul {
       margin-left: 4px;
+      padding-right: 6px;
     }
   }
 
@@ -88,7 +83,7 @@ section#quartos-carousel {
 
     margin: 0 3px 0 0;
     padding-top: 12px;
-    background-color: #D9D9D9;
+    background-color: $box-color;
     border-radius: 20px;
   }
 
@@ -97,7 +92,7 @@ section#quartos-carousel {
 
     margin: 0 0 0 3px;
     padding-top: 12px;
-    background-color: #D9D9D9;
+    background-color: $box-color;
     border-radius: 20px;
   }
 
@@ -146,24 +141,29 @@ section#quartos-carousel {
     button:hover {
       transform: scale(1.1) !important;
       transition-duration: 0.2s;
-      border: solid 4px var(--cor-primaria);
+      border: solid 4px style.$cor-primaria;
     }
   }
 }
 
 @include media-breakpoint-up(md) {
   .aba {
-    --img-height: 450px;
-    --aba-width: var(--img-height) * (4/3);
+    $img-height: 450px;
+    $aba-width: $img-height * (4/3);
 
-    grid-template-columns: calc(var(--aba-width) / 2) calc(var(--aba-width) / 2);
+    grid-template-columns: calc($aba-width / 2) calc($aba-width / 2);
+    grid-template-rows: $img-height auto auto;
     grid-template-areas:
       'imagem-quarto imagem-quarto'
       'info numerador'
       'info contador';
 
     padding: 30px 30px;
-    max-width: calc(var(--aba-width) + (2 * 30px));
+    max-width: calc($aba-width + (2 * 30px));
+
+    img {
+      width: $aba-width;
+    }
 
     p {
       font-size: 1.4rem;
@@ -198,12 +198,19 @@ section#quartos-carousel {
 
 @include media-breakpoint-up(xl) {
   .aba {
-    --img-height: 360px;
-    --aba-width: var(--img-height) * (4/3);
+    $img-height: 360px;
+    $aba-width: $img-height * (4/3);
+
+    grid-template-columns: calc($aba-width / 2) calc($aba-width / 2);
+    grid-template-rows: $img-height auto auto;
 
     margin: 40px auto;
     padding: 30px 30px;
-    max-width: calc(var(--aba-width) + (2 * 30px));
+    max-width: calc($aba-width + (2 * 30px));
+
+    img {
+      width: $aba-width;
+    }
 
     p {
       font-size: 1.2rem;
@@ -238,12 +245,18 @@ section#quartos-carousel {
 
 @include media-breakpoint-up(xxl) {
   .aba {
-    --img-height: 450px;
-    --aba-width: var(--img-height) * (4/3);
+    $img-height: 450px;
+    $aba-width: $img-height * (4/3);
 
+    grid-template-columns: calc($aba-width / 2) calc($aba-width / 2);
+    grid-template-rows: $img-height auto auto;
     margin: 40px auto;
     padding: 30px 30px;
-    max-width: calc(var(--aba-width) + (2 * 30px));
+    max-width: calc($aba-width + (2 * 30px));
+
+    img {
+      width: $aba-width;
+    }
 
     p {
       font-size: 1.4rem;
@@ -278,17 +291,4 @@ section#quartos-carousel {
       }
     }
   }
-}
-
-
-footer {
-  width: 100vw;
-  height: 148px;
-  position: fixed;
-  bottom: 0;
-  z-index: -1;
-
-  background-image: url("/assets/FooterWave.png");
-  background-size: 100vw 148px;
-  background-repeat: no-repeat;
 }

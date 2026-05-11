@@ -1,37 +1,10 @@
-import { useState, type JSX } from "react";
+import { useState } from "react";
 import { Splide, SplideSlide, type SplideProps } from "@trg69/react-splide";
-// Import just what we need from bootstrap
-import 'bootstrap/js/dist/button';
-import 'bootstrap/js/dist/collapse';
-import 'bootstrap/js/dist/dropdown';
-import 'bootstrap/js/dist/tab';
-// import "/js/shared.js";
+import BarraProgresso from "../components/BarraProgresso";
 
 // import css
-import '../styles/Quartos.scss';
 import "@trg69/react-splide/css";
-
-
-// mandar para a etapa anterior ou a proxima
-// let next_step = "./pagamento.html";
-// let prev_step = "./calendario.html";
-// const prev_button = document.querySelector("article#reserva-etapas #etapas-prev");
-// const next_button = document.querySelector("article#reserva-etapas #etapas-next");
-
-// if (next_button != null) {
-//     next_button.addEventListener("click", (ev) => {
-//       window.location.href = next_step;
-//   })
-// }
-
-// prev_button.addEventListener("click", (ev) => {
-//     window.location.href = prev_step;
-// })
-
-// const mini_progress_bar = document.querySelector("article#reserva-mini-etapas");
-// mini_progress_bar.addEventListener("click", (ev) => {
-//     window.location.href = next_step;
-// })
+import "../styles/Quartos.scss";
 
 
 function AbaContador(prop: {limit: number}) {
@@ -60,58 +33,6 @@ function AbaContador(prop: {limit: number}) {
       </div>
   )
 }
-
-// if you change the number of steps, change etapa_position if statement
-function BarraProgresso(prop: {step: 0 | 1 | 2 }) {
-  type status = "done" | "on-going" | "not-yet"
-  const steps_list: string[] = ["Data", "Quartos", "Pagamento"];
-  
-  const steps_divs: JSX.Element[] = steps_list.map((step_name, i) => {
-    let etapa_status: status = "done";
-    if (i == prop.step) {
-      etapa_status = "on-going";
-    }
-    if (i > prop.step) {
-      etapa_status = "not-yet";
-    }
-
-    let etapa_position: "" | "first" | "last" = "";
-    if (i == 0) {
-      etapa_position = "first";
-    }
-    if (i == 2) {
-      etapa_position = "last";
-    }
-
-    return (
-      <div key={step_name} className={`etapa ${etapa_status} ${etapa_position}`}>
-        <h2>{step_name}</h2>
-      </div>)
-  });
-
-    
-  return (
-      <div className="barra-progresso">
-
-        <h1>Reserva em andamento</h1>
-
-        <article id="reserva-etapas" className="d-none d-lg-flex">
-          <button id="etapas-prev" onClick={() => {window.location.href=steps_list[prop.step - 1]}}></button>
-
-          {steps_divs}
-
-          <button id="etapas-next" onClick={() => {window.location.href=steps_list[prop.step + 1]}}></button>
-        </article>
-
-        <article id="reserva-mini-etapas" className="d-lg-none">
-          <h2>Quartos</h2>
-        </article>
-      </div>
-  )
-}
-// <div id="etapa-pagamento" className="etapa">
-//   <h2>Pagamento</h2>
-// </div>
 
 
 export default function Quartos() {

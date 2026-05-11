@@ -13,6 +13,13 @@
 @import "bootstrap/scss/bootstrap.scss";
 @import "bootstrap-icons/font/bootstrap-icons.css";
 
+$cor-background: #F5F0E6;
+$branco: #ffffff;
+$preto: #000000;
+$cor-primaria: #1f6f50;
+$cor-secundaria: #f4c430;
+$cor-terciaria: #272623;
+
 :root {
   --cor-background: #F5F0E6;
   --branco: #ffffff;
@@ -103,102 +110,6 @@ header {
   margin-right: 1rem;
 }
 
-
-.barra-progresso {
-  height: auto;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-article#reserva-etapas {
-  display: flex;
-  align-content: center;
-  justify-content: center;
-
-  margin: 30px 0;
-
-  button {
-    height: 43px;
-    aspect-ratio: 1;
-    border: none;
-    background-size: 43px 43px;
-    background-color: transparent;
-  }
-
-  button:hover {
-    transform: none;
-    border: none;
-  }
-
-  button#etapas-prev {
-    background-image: url("/src/assets/carousel_button_left.svg");
-    margin-right: 50px;
-  }
-
-  button#etapas-next {
-    background-image: url("/src/assets/carousel_button_right.svg");
-    margin-left: 78px;
-  }
-
-  .etapa {
-    margin: 0 -32px;
-    width: 300px;
-    height: 43px;
-
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-size: cover;
-
-    h2 {
-      font-size: 1.8em;
-      font-weight: bold;
-    }
-  }
-
-  .etapa#etapa-data {
-    z-index: 3;
-
-    h2 {
-      margin-right: 16px;
-    }
-  }
-
-  .etapa#etapa-quarto {
-    z-index: 2;
-  }
-
-  .etapa#etapa-hospedes {
-    z-index: 1;
-    display: none;
-  }
-
-  .etapa#etapa-pagamento {
-    margin: 0 -60px;
-    z-index: 0;
-
-    h2 {
-      margin-left: 70px;
-    }
-  }
-}
-
-article#reserva-mini-etapas {
-  background-image: url("/src/assets/mini_etapa.svg");
-  background-size: 240px 50px;
-  background-repeat: no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 240px;
-  height: 50px;
-  margin: 30px auto;
-
-  color: var(--branco);
-}
-
 footer.wave {
   width: 100vw;
   height: 148px;
@@ -206,7 +117,7 @@ footer.wave {
   bottom: 0;
   z-index: -1;
 
-  background-image: url("/src/assets/FooterWave.png");
+  background-image: url("/src/assets/footer_wave.png");
   background-size: max(100vw, 800px) 148px;
   background-repeat: no-repeat;
 }
