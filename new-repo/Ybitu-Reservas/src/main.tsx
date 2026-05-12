@@ -9,10 +9,11 @@ import 'bootstrap/js/dist/tab';
 import Quartos from './pages/Quartos.tsx'
 
 import './styles/style.scss'
+import Feedback from './pages/Feedback.tsx';
 // import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Quartos />
+    <Feedback />
   </StrictMode>,
 )
