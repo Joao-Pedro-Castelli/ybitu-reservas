@@ -33,20 +33,20 @@ export default function BarraProgresso(prop: {step: 0 | 1 | 2 }) {
     
   return (
     <div className="reserva-header">
-
       <h1>Reserva em andamento</h1>
-
-      <article id="barra-progresso" className="d-none d-lg-flex">
+      <div id="progresso">
         <button id="etapas-prev" onClick={() => {window.location.href=steps_list[prop.step - 1]}}></button>
 
-        {steps_divs}
+        <article id="barra" className="d-none d-lg-flex">
+          {steps_divs}
+        </article>
+
+        <article id="mini" className="d-lg-none">
+          <h2>{steps_list[prop.step]}</h2>
+        </article>
 
         <button id="etapas-next" onClick={() => {window.location.href=steps_list[prop.step + 1]}}></button>
-      </article>
-
-      <article id="mini-progresso" className="d-lg-none">
-        <h2>{steps_list[prop.step]}</h2>
-      </article>
+      </div>
     </div>
   )
 }

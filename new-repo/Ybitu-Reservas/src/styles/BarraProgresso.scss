@@ -1,32 +1,35 @@
 @use "./style.scss";
 
 .reserva-header {
-  height: auto;
   width: 100vw;
   text-align: center;
 
-  article#barra-progresso {
+  button {
+    height: 43px;
+    aspect-ratio: 1;
+    margin: 0 10px;
+    border: none;
+    background-size: 43px 43px;
+    background-color: transparent;
+  }
+
+  button#etapas-prev {
+    background-image: url("/src/assets/carousel_button_left.svg");
+  }
+
+  button#etapas-next {
+    background-image: url("/src/assets/carousel_button_right.svg");
+  }
+
+  div#progresso {
     display: flex;
     justify-content: center;
-
     margin: 30px 0;
+  }
 
-    button {
-      height: 43px;
-      aspect-ratio: 1;
-      margin: 0 10px;
-      border: none;
-      background-size: 43px 43px;
-      background-color: transparent;
-    }
-
-    button#etapas-prev {
-      background-image: url("/src/assets/carousel_button_left.svg");
-    }
-
-    button#etapas-next {
-      background-image: url("/src/assets/carousel_button_right.svg");
-    }
+  article#barra {
+    display: flex;
+    justify-content: center;
 
     .etapa {
       width: 300px;
@@ -89,17 +92,22 @@
     }
   }
 
-  article#mini-progresso {
+  article#mini {
     display: flex;
     justify-content: center;
 
     width: 240px;
     height: 50px;
-    margin: 30px auto;
+    margin: 0 20px;
 
     color: var(--branco);
     background-image: url("/src/assets/mini_etapa.svg");
     background-size: 240px 50px;
     background-repeat: no-repeat;
+
+    h2 {
+      display: flex;
+      align-items: center;
+    }
   }
 }
