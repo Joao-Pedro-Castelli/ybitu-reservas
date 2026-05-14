@@ -1,13 +1,6 @@
 import Splide from "@splidejs/splide";
-
-import "css/quartos.scss";
-import * as bootstrap from "bootstrap";
+import "/js/shared.js";
 import "@splidejs/splide/css";
-
-import QuartoCasalImg from "images/quartos/QuartoCasal.png";
-import QuartoTriploImg from "images/quartos/QuartoTriplo.png";
-import QuartoQuadruploImg from "images/quartos/QuartoQuadruplo.png";
-import Logo from "images/logo.png";
 
 new Splide( ".splide", {
   perPage: 2,
@@ -20,22 +13,29 @@ new Splide( ".splide", {
     1200: {
       perPage: 1,
     },
-  }
+  },
+  dragMinThreshold: {
+    mouse: 20,
+    touch: 20,
+  },
 } ).mount();
 //  arrowPath: 'M11 20.3152L19.3152 12M11 20.3152H27.6304M11 20.3152L19.3152 27.4425',
 
-document.querySelector("#logo").src = Logo;
-document.querySelector("#quarto-casal-aba img").src = QuartoCasalImg;
-document.querySelector("#quarto-triplo-aba img").src = QuartoTriploImg;
-document.querySelector("#quarto-quadruplo-aba img").src = QuartoQuadruploImg;
-//document.querySelector('#QuartoCasal').src = QuartoCasalImg;
 
-// mandar para proxima etapa
-let next_step = "./pagamento.bundle.html";
-const progress_bar = document.querySelector("article#reserva-etapas");
-progress_bar.addEventListener("click", (ev) => {
+// mandar para a etapa anterior ou a proxima
+let next_step = "./pagamento.html";
+let prev_step = "./calendario.html";
+const prev_button = document.querySelector("article#reserva-etapas #etapas-prev");
+const next_button = document.querySelector("article#reserva-etapas #etapas-next");
+
+next_button.addEventListener("click", (ev) => {
     window.location.href = next_step;
 })
+
+prev_button.addEventListener("click", (ev) => {
+    window.location.href = prev_step;
+})
+
 const mini_progress_bar = document.querySelector("article#reserva-mini-etapas");
 mini_progress_bar.addEventListener("click", (ev) => {
     window.location.href = next_step;

@@ -1,0 +1,122 @@
+/* code to get inter fonts from npm into SCSS*/
+@use "inter-ui/default" with ($inter-font-display: swap,
+  $inter-font-path: 'inter-ui/web'
+);
+
+@use "inter-ui/variable" with ($inter-font-display: swap,
+  $inter-font-path: 'inter-ui/variable'
+);
+
+$bootstrap-icons-font-dir: "bootstrap-icons/font/fonts";
+@import "tailwindcss";
+@import "bootstrap-icons/font/bootstrap-icons";
+
+$cor-background: #F5F0E6;
+$branco: #ffffff;
+$preto: #000000;
+$cinza: #BCBCBC;
+$cor-primaria: #1f6f50;
+$cor-secundaria: #f4c430;
+$cor-terciaria: #272623;
+
+:root {
+  --cor-background: #F5F0E6;
+  --branco: #ffffff;
+  --preto: #000000;
+  --cor-primaria: #1f6f50;
+  --cor-secundaria: #f4c430;
+  --cor-terciaria: #272623;
+}
+
+body {
+  font-family: "Inter", "system-ui";
+
+  background-color: var(--cor-background) !important;
+}
+
+@supports (font-variation-settings: normal) {
+  body {
+    font-family: "InterVariable", "system-ui";
+  }
+}
+
+h2 {
+  text-align: center;
+  font-size: 1.6em;
+  font-weight: 500;
+}
+
+header {
+  width: 100vw;
+}
+
+.navbar {
+  min-height: 80px;
+  padding: 10px 2rem;
+  background-color: var(--cor-background) !important;
+}
+
+.navbar-nav {
+  width: 100%;
+}
+
+/* @include media-breakpoint-up(lg) { */
+/* .navbar-nav { */
+/* display: flex; */
+/* flex-direction: row; */
+/* justify-content: space-evenly; */
+/* align-items: center; */
+/* } */
+/* } */
+
+.navbar-brand {
+  margin-left: 5%;
+  font-size: 1.8rem;
+  color: var(--cor-secundaria) !important;
+  width: 104px;
+  height: 90px;
+}
+
+.nav-link {
+  color: var(--preto) !important;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.navbar .container-fluid {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#btn-carrinho .nav-link {
+  padding: 10px 16px;
+  width: auto;
+  height: auto;
+  background-color: var(--cor-primaria);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  color: var(--cor-background) !important;
+}
+
+#btn-carrinho i {
+  font-size: 42.25px;
+  color: var(--cor-secundaria);
+  margin-right: 1rem;
+}
+
+footer.wave {
+  width: 100vw;
+  height: 148px;
+  position: fixed;
+  bottom: 0;
+  z-index: -1;
+
+  background-image: url("/src/assets/footer_wave.png");
+  background-size: max(100vw, 800px) 148px;
+  background-repeat: no-repeat;
+}

@@ -1,8 +1,5 @@
-import "css/login.scss";
-import * as bootstrap from "bootstrap";
+import "/js/shared.js";
 
-import Logo from "images/logo.png";
-import FooterWave from "images/FooterWave.png";
-
-document.querySelector("#logo").src = Logo;
-document.querySelector("footer img").src = FooterWave;
+document.querySelector("#login-button").addEventListener("click", (ev) => {
+  window.location.href = "/calendario.html"
+});

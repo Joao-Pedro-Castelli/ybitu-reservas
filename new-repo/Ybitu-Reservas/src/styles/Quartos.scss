@@ -1,0 +1,237 @@
+@use "./style.scss";
+
+section#quartos-carousel {
+  margin: 10px auto 60px auto;
+}
+
+.aba {
+  $img-height: 240px;
+  $aba-width: $img-height * (4/3);
+
+  $box-color: #D9D9D9;
+
+  display: grid;
+  place-items: stretch;
+  grid-template-columns: calc((4/10) * $aba-width) calc((6/10) * $aba-width);
+  grid-template-rows: $img-height auto auto;
+  grid-template-areas:
+    'imagem-quarto imagem-quarto'
+    'info info'
+    'numerador contador';
+
+  margin: 24px auto;
+  padding: 25px min(25px, 50vw - ($aba-width / 2));
+  max-width: calc($aba-width + (2 * 25px));
+  /*294 + padding*/
+
+  border-radius: 20px;
+  background-color: style.$cor-background;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.35);
+
+  img {
+    grid-area: imagem-quarto;
+    width: $aba-width;
+    height: 100%;
+    border-radius: 20px;
+  }
+
+  li {
+    font-size: 1.0rem;
+  }
+
+  p {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  .aba-info {
+    grid-area: info;
+
+    margin: 20px 0 8px 0;
+    background-color: $box-color;
+    border-radius: 20px;
+    padding: 12px 0 18px 0;
+
+    h2 {
+      margin: 0 auto 10px auto;
+      width: fit-content;
+      font-weight: bold;
+      font-size: 2.0em;
+    }
+
+    ul {
+      margin-left: 4px;
+      padding-right: 6px;
+    }
+  }
+
+  .aba-numerador {
+    grid-area: numerador;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    margin: 0 3px 0 0;
+    padding-top: 12px;
+    background-color: $box-color;
+    border-radius: 20px;
+  }
+
+  .aba-contador {
+    grid-area: contador;
+
+    margin: 0 0 0 3px;
+    padding-top: 12px;
+    background-color: $box-color;
+    border-radius: 20px;
+  }
+
+  .aba-mostrador {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-around;
+
+    margin-bottom: 12px;
+    height: 3.2rem;
+    font-weight: bold;
+
+    p,
+    button {
+      border: solid 2px black;
+    }
+
+    p {
+      flex: 1 1 40%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      margin: 0;
+      max-width: 60%;
+      background-color: white;
+      font-size: 2.8rem;
+    }
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      margin: 0 6px;
+      padding-bottom: 5%;
+      height: 100%;
+      aspect-ratio: 1;
+
+      background-color: transparent;
+      font-size: 3.0rem;
+      border-radius: 10px;
+    }
+
+    button:hover {
+      transform: scale(1.1) !important;
+      transition-duration: 0.2s;
+      border: solid 4px style.$cor-primaria;
+    }
+  }
+}
+
+@mixin aba-vertical-style($img-height) {
+  .aba {
+    $aba-width: $img-height * (4/3);
+
+    grid-template-columns: calc($aba-width * (8/14)) calc($aba-width * (6/14));
+    grid-template-rows: $img-height $img-height/2 $img-height/2;
+    margin: 40px auto;
+    padding: 30px 30px;
+    max-width: calc($aba-width + (2 * 30px));
+
+    img {
+      width: $aba-width;
+    }
+  }
+}
+
+@media (width >=48rem) {
+  @include aba-vertical-style(450px);
+
+  .aba {
+
+    grid-template-areas:
+      'imagem-quarto imagem-quarto'
+      'info numerador'
+      'info contador';
+
+    padding: 30px 30px;
+
+    p {
+      font-size: 1.4rem;
+    }
+
+    li {
+      font-size: 1.2rem;
+    }
+
+    .aba-info {
+      margin: 20px 5px 0 0;
+
+      h2 {
+        max-width: 260px;
+        font-size: 2.2rem;
+      }
+    }
+
+    .aba-numerador {
+      margin: 20px 0 5px 5px;
+    }
+
+    .aba-contador {
+      margin: 5px 0 0 5px;
+    }
+
+    .aba-mostrador p {
+      max-width: 40%;
+    }
+  }
+}
+
+@media (width >=80rem) {
+  @include aba-vertical-style(360px);
+
+  .aba {
+
+    margin: 40px auto;
+
+    p {
+      font-size: 1.2rem;
+    }
+
+    li {
+      font-size: 1.1rem;
+    }
+
+  }
+}
+
+@media (width >=96rem) {
+  @include aba-vertical-style(450px);
+
+  .aba {
+
+    margin: 40px auto;
+
+    p {
+      font-size: 1.4rem;
+    }
+
+    li {
+      font-size: 1.2rem;
+    }
+
+    .aba-mostrador {
+      height: 3.5rem;
+    }
+  }
+}

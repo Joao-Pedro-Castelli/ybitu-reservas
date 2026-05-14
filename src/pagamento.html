@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 
 <head>
   <title> Pousada Ybitu: Conclusão</title>
   <meta charset="utf-8">
-  <meta lang="pt-BR">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!--<link rel="stylesheet" href="/src/styles/style.scss">-->
+  <link rel="stylesheet" href="styles/pagamento.scss">
 </head>
 
 <body>
@@ -13,8 +15,8 @@
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
 
-        <a class="navbar-brand" href="#">
-          <img id="logo" alt="Logo" height="90" width="104">
+        <a class="navbar-brand" href="https://pousadaybitu.com.br/">
+          <img src="assets/logo.png" alt="Logo" height="90" width="104">
         </a>
 
         <!-- Botão hamburguer para mobile -->
@@ -24,10 +26,12 @@
 
         <div class="collapse navbar-collapse" id="menu">
           <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link" href="#">HOME</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">POUSADA YBITU</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">PASSEIOS E EVENTOS</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">CONTATO</a></li>
+            <li class="nav-item"><a class="nav-link" href="https://pousadaybitu.com.br/">HOME</a></li>
+            <li class="nav-item"><a class="nav-link" href="https://pousadaybitu.com.br/quem-somos/">POUSADA YBITU</a>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="https://pousadaybitu.com.br/passeios-e-eventos/">PASSEIOS E
+                EVENTOS</a></li>
+            <li class="nav-item"><a class="nav-link" href="https://pousadaybitu.com.br/contato/">CONTATO</a></li>
             <li id="btn-carrinho" class="nav-item">
               <button class="nav-link">
                 <div class="square">
@@ -43,33 +47,40 @@
     </nav>
   </header>
 
-  <h1>Finalizar reserva</h1>
+  <div class="barra-progresso">
 
-  <article id="reserva-etapas" class="d-none d-lg-flex">
-    <div id="etapa-data" class="etapa">
-      <h2>Data</h2>
-    </div>
-    <div id="etapa-quarto" class="etapa">
-      <h2>Quartos</h2>
-    </div>
-    <div id="etapa-hospedes" class="etapa">
-      <h2>Hóspedes</h2>
-    </div>
-    <div id="etapa-pagamento" class="etapa">
+    <h1>Reserva em andamento</h1>
+
+    <article id="reserva-etapas" class="d-none d-lg-flex">
+      <button id="etapas-prev"></button>
+
+      <div id="etapa-data" class="etapa">
+        <h2>Data</h2>
+      </div>
+      <div id="etapa-quarto" class="etapa">
+        <h2>Quartos</h2>
+      </div>
+      <div id="etapa-hospedes" class="etapa">
+        <h2>Hóspedes</h2>
+      </div>
+      <div id="etapa-pagamento" class="etapa">
+        <h2>Pagamento</h2>
+      </div>
+
+      <button id="etapas-next"></button>
+    </article>
+
+    <article id="reserva-mini-etapas" class="d-lg-none">
       <h2>Pagamento</h2>
-    </div>
-  </article>
-
-  <article id="reserva-mini-etapas" class="d-lg-none">
-    <h2>Quartos</h2>
-  </article>
+    </article>
+  </div>
 
   <main>
     <section>
       <h2>Como concluir a reserva</h2>
       <p>
         Ao lado, é possível ver a quantidade e as opções de quarto adicionados ao carrinho.Foram realizadas
-        2 reservas, totalizando 4 quartos.
+        2 reservas, totalizando 6 quartos.
       </p>
       <p>
         Caso deseje editar suas escolhas, clique no ícone do
@@ -81,18 +92,21 @@
         reserva", que irá direcioná-lo para um de nossos
         atendentes no WhatsApp.
       </p>
+      <p>Caso queira adicionar mais quartos clique no botão abaixo</p>
+
+      <a href="calendario.html" id="maisquartos">Adicionar mais quartos</a>
     </section>
 
     <aside>
       <div id="reserva-imagem">
-        <img id="reserva-carrinho" alt="Desenho de um carrinho de supermercado">
+        <img src="assets/pagamento/carrinho.png" alt="Desenho de um carrinho de supermercado">
       </div>
-      <div id="reserva-titulo">
+      <div>
         <h2>MEU CARRINHO</h2>
       </div>
       <div id="reserva-opcoes">
         <div id="reserva-1" class="opcao-reserva">
-          <div id="reserva-titulo">
+          <div class="reserva-titulo">
             <h3>Grupo 1</h3>
             <div class="icones">
               <i class="bi bi-pencil-fill"></i>
@@ -110,7 +124,7 @@
         </div>
 
         <div id="reserva-2" class="opcao-reserva">
-          <div id="reserva-titulo">
+          <div class="reserva-titulo">
             <h3>Grupo 2</h3>
             <div class="icones">
               <i class="bi bi-pencil-fill"></i>
@@ -126,11 +140,14 @@
           </div>
         </div>
       </div>
-      <a id="reserva-botao" href="./feedback.bundle.html">CONCLUIR RESERVA</a>
+      <a id="reserva-botao" href="./feedback.html">CONCLUIR RESERVA</a>
     </aside>
   </main>
-  <footer>
+
+  <footer class="wave">
   </footer>
+
+  <script type="module" src="js/pagamento.js"></script>
 </body>
 
 </html>

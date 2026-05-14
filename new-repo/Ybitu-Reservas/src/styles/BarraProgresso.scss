@@ -1,0 +1,111 @@
+@use "./style.scss";
+
+.reserva-header {
+  width: 100vw;
+  text-align: center;
+
+  button {
+    height: 43px;
+    aspect-ratio: 1;
+    margin: 0 10px;
+    border: none;
+    background-size: 43px 43px;
+    background-color: transparent;
+  }
+
+  button#etapas-prev {
+    background-image: url("/src/assets/carousel_button_left.svg");
+  }
+
+  button#etapas-next {
+    background-image: url("/src/assets/carousel_button_right.svg");
+  }
+
+  div#progresso {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+  }
+
+  article#barra {
+    justify-content: center;
+
+    .etapa {
+      width: 300px;
+      height: 43px;
+      margin: 0;
+
+      h2 {
+        font-size: 1.8em;
+        font-weight: bold;
+      }
+    }
+
+    /* positioning */
+    .etapa.first {
+      margin-left: 20px;
+
+      h2 {
+        padding-right: 38px;
+      }
+    }
+
+    .etapa.first,
+    .etapa.middle {
+      margin-right: -47px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .etapa.last {
+      margin-right: 20px;
+      border: style.$preto solid 1.8px;
+
+      h2 {
+        padding-left: 42px;
+      }
+    }
+
+    /* color */
+    .etapa.done {
+      background-image: url("../assets/etapa_verde.svg");
+    }
+
+    .etapa.on-going {
+      background-image: url("../assets/etapa_amarelo.svg");
+    }
+
+    .etapa.not-yet {
+      background-image: url("../src/assets/etapa_cinza.svg");
+    }
+
+    .etapa.last.not-yet {
+      background-image: none;
+      background-color: style.$cinza;
+    }
+
+    .etapa.last.on-going {
+      background-image: none;
+      background-color: var(--cor-secundaria);
+    }
+  }
+
+  article#mini {
+    justify-content: center;
+
+    width: 240px;
+    height: 50px;
+    margin: 0 20px;
+
+    color: var(--branco);
+    background-image: url("/src/assets/mini_etapa.svg");
+    background-size: 240px 50px;
+    background-repeat: no-repeat;
+
+    h2 {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
