@@ -5,10 +5,10 @@ export default function Cadastro() {
     return (
 
         <div className="flex flex-col min-h-screen justify-between">
-            <div className="container mx-auto flex flex-col justify-center items-center bg-[#F5F0E6] lg:flex-row lg:justify-between lg:gap-12 xl:gap-0">
+            <div className="container mx-auto flex flex-col justify-center items-center bg-[#F5F0E6] lg:flex-row lg:justify-around lg:gap-12 xl:gap-0">
                 <div className="md:text-xl mt-6 pt-72 flex flex-col items-center  bg-[url('src/assets/cadastro/pousadas.png')] min-w-100 min-h-140 bg-cover bg-center rounded md:min-h-160 md:min-w-120 ">
                     <h2 className="text-white bg-[#1F6F50] px-2 py-0.5">CRIE A SUA CONTA</h2>
-                    <p className=" mt-4 text-white ">Registre-se agora para garantir:</p>
+                    <p className=" mt-5 mb-3 text-white ">Registre-se agora para garantir:</p>
                     <ol className="list-decimal">
                         <li className="px-1 py-0.5 text-white bg-[#1F6F50]">Acesso completo as possíveis reservas</li>
                         <li className=" px-1 py-0.5 mt-2 text-white bg-[#1F6F50]">Escolha personalizada dos quartos</li>
@@ -17,9 +17,9 @@ export default function Cadastro() {
                 </div>
                 <div>
                     <div className="mt-8 flex items-center justify-center flex-col ">
-                        <h1>FAZER CADASTRO</h1>
-                        <p className="max-w-100 md:max-w-120"> Realize seu cadastro para tirar proveito de todos os benefícios de nosso sistema de reserva. </p>
-                        <p className="max-w-100 md:max-w-120">Para isso basta indicar um e-mail Google para cadastro rápido e pratico em nosso sistema</p>
+                        <div className="font-bold text-4xl">FAZER CADASTRO</div>
+                        <p className=" mt-4 max-w-100 md:max-w-120 lg:mt-8">Realize seu cadastro para tirar proveito de todos os benefícios de nosso sistema de reserva. </p>
+                        <p className=" mt-3 mb-9 max-w-100 md:max-w-120">Para isso basta indicar as informações no formulário abaixo:</p>
                     </div>
                     <div className="bg-[#272623] rounded py-6 px-8 min-w-100">
                         <div><img src="src/assets/logo_branca.png" alt="" width="40" /></div>
