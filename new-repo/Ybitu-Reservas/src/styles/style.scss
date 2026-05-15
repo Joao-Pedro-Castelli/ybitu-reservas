@@ -16,6 +16,7 @@ $branco: #ffffff;
 $preto: #000000;
 $cinza: #BCBCBC;
 $cor-primaria: #1f6f50;
+$cor-primaria-leve: #36A366;
 $cor-secundaria: #f4c430;
 $cor-terciaria: #272623;
 
@@ -40,6 +41,11 @@ body {
   }
 }
 
+h1 {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
 h2 {
   text-align: center;
   font-size: 1.6em;
@@ -48,6 +54,16 @@ h2 {
 
 header {
   width: 100vw;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* for all elements that should react from hovering */
+.mouse-reaction:hover {
+  transform: scale(1.08);
+  transition-duration: 0.2s;
 }
 
 .navbar {

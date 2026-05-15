@@ -7,32 +7,89 @@ import "@trg69/react-splide/css";
 import "../styles/Quartos.scss";
 import Footer from "../components/Footer";
 
+import QuartoDuploImage from "../assets/quartos/QuartoCasal.jpeg";
+import QuartoTriploImage from "../assets/quartos/QuartoTriplo.jpeg";
+import QuartoQuadruploImage from "../assets/quartos/QuartoQuadruplo.jpeg";
 
-function AbaContador(prop: {limit: number}) {
+type stateOp<T> = (c: T) => void;
+function AbaContador(prop: {count: number, limit: number, sub: stateOp<number>, add: stateOp<number>}) {
+  return (
+      <>
+        <h3>Quantidade de reservas:</h3>
+        <div className="aba-mostrador">
+          <i className="bi bi-dash mouse-reaction" onClick={() => prop.sub(prop.count)}/> 
+          <p>{prop.count}</p>
+          <i className="bi bi-plus mouse-reaction" onClick={() => prop.add(prop.count)}/>
+        </div>
+      </>
+  );
+};
+
+function AbaSelecao(prop: {limit: number}) {
   let [count, setCount] = useState(0);
 
   const subtract = (c: number) => {
-    if (c != 0) {
-      setCount(c - 1);
-    }
+    setCount(c - 1);
   };
-
   const add = (c: number) => {
     if (c < prop.limit) {
       setCount(c + 1);
     }
   };
+
+  const abrirContador = () => {
+    setCount(1);
+  };
+
+  return (
+    <div className="aba-contador aba-area">
+      {count == 0 && <div className="w-full h-full flex items-center justify-center">
+         <button className="aba-selecionar mouse-reaction" onClick={() => abrirContador()}>Selecionar quarto</button>
+      </div>}
+      {count != 0 && <AbaContador count={count} limit={prop.limit} sub={subtract} add={add} />}
+    </div>
+  );
+};
+
+type QuartoData = {
+  type: string,
+  title: string,
+  imageSrc: string,
+  imageLabel: string,
+  items: string[],
+  quantity: number;
+};
+
+function AbaQuarto(prop: {data: QuartoData}) {
+  if (!Number.isInteger(prop.data.quantity)) {
+    console.log("Aba with non-integer number");
+    return null;
+  }
+
+  const itemList = prop.data.items.map((item, i) => {
+    return (
+      <li key={prop.data.type + i.toString()}>{item}</li>
+    );
+  });
   
   return (
-      <div className="aba-contador">
-        <p>Quantidade de reservas:</p>
+    <div className="aba">
+      <img src={prop.data.imageSrc} alt={prop.data.imageLabel} />
+      <div className="aba-info aba-area">
+        <h3>{prop.data.title}</h3>
+        <ul className="list-outside list-disc leading-[1.2]">
+          {itemList}
+        </ul>
+      </div>
+      <div className="aba-numerador aba-area">
+        <h3>Quantidade disponível:</h3>
         <div className="aba-mostrador">
-          <button onClick={() => subtract(count)} >-</button>
-          <p>{count}</p>
-          <button onClick={() => add(count)} >+</button>
+          <p>{prop.data.quantity}</p>
         </div>
       </div>
-  )
+      <AbaSelecao limit={prop.data.quantity}/>
+    </div>
+  );
 }
 
 
@@ -49,7 +106,7 @@ export default function Quartos() {
         2150: {
           perPage: 2,
         },
-        1200: {
+        1280: {
           perPage: 1,
         },
       },
@@ -64,79 +121,46 @@ export default function Quartos() {
     "aria-label": "Lista dos quartos",
   };
 
+  const quartosList: QuartoData[] = [
+    {
+      type: "quarto-duplo",
+      title: "Quarto duplo",
+      imageSrc: QuartoDuploImage,
+      imageLabel: "Foto de um belo quarto com uma cama de casal",
+      items: ["1 cama de casal", "1 banheiro", "Televisão", "Frigobar"],
+      quantity: 3,
+    },
+    {
+      type: "quarto-triplo",
+      title: "Quarto triplo",
+      imageSrc: QuartoTriploImage,
+      imageLabel: "Foto de um belo quarto com uma cama de casal e uma cama de solteiro",
+      items: ["1 cama de casal ou 2 de solteiro", "1 cama de solteiro", "1 banheiro", "Televisão", "Frigobar"],
+      quantity: 3,
+    },
+    {
+      type: "quarto-quadruplo",
+      title: "Quarto quádruplo",
+      imageSrc: QuartoQuadruploImage,
+      imageLabel: "Foto de um quarto com uma cama de casal e duas de solteiro",
+      items: ["1 cama de casal ou 2 de solteiro", "2 camas de solteiro", "1 banheiro", "Televisão", "Frigobar"],
+      quantity: 3,
+    },
+  ];
+
   return (
     <>
       <BarraProgresso step={1}/>
 
       <h2>Escolha os quartos e a quantidade que serão reservados:</h2>
 
-      <Splide {... splide_config} >
-            <SplideSlide id="quarto-casal">
-              <div id="quarto-casal-aba" className="aba">
-                <img src="src/assets/quartos/QuartoCasal.jpeg" alt="Foto de um quarto com uma cama de casal"/>
-                <div className="aba-info">
-                  <h2>Quarto de casal</h2>
-                  <ul>
-                    <li>1 cama de casal</li>
-                    <li>1 banheiro</li>
-                    <li>Televisão</li>
-                    <li>Frigobar</li>
-                  </ul>
-                </div>
-                <div className="aba-numerador">
-                  <p>Quantidade disponível:</p>
-                  <div className="aba-mostrador">
-                    <p>3</p>
-                  </div>
-                </div>
-                <AbaContador limit={3}/>
-              </div>
-            </SplideSlide>
-            <SplideSlide id="quarto-triplo">
-              <div id="quarto-triplo-aba" className="aba">
-                <img src="src/assets/quartos/QuartoTriplo.jpeg" alt="Foto de um quarto com uma cama de casal e uma de solteiro"/>
-                <div className="aba-info">
-                  <h2>Quarto triplo</h2>
-                  <ul>
-                    <li>1 cama de casal ou 2 de solteiro</li>
-                    <li>1 cama de solteiro</li>
-                    <li>1 banheiro</li>
-                    <li>Televisão</li>
-                    <li>Frigobar</li>
-                  </ul>
-                </div>
-                <div className="aba-numerador">
-                  <p>Quantidade disponível:</p>
-                  <div className="aba-mostrador">
-                    <p>3</p>
-                  </div>
-                </div>
-                <AbaContador limit={3}/>
-              </div>
-            </SplideSlide>
-            <SplideSlide id="quarto-quadruplo">
-              <div id="quarto-quadruplo-aba" className="aba">
-                <img src="src/assets/quartos/QuartoQuadruplo.jpeg"
-                  alt="Foto de um quarto com uma cama de casal e duas de solteiro"/>
-                <div className="aba-info">
-                  <h2>Quarto quádruplo</h2>
-                  <ul>
-                    <li>1 cama de casal ou 2 de solteiro</li>
-                    <li>2 cama de solteiro</li>
-                    <li>1 banheiro</li>
-                    <li>Televisão</li>
-                    <li>Frigobar</li>
-                  </ul>
-                </div>
-                <div className="aba-numerador">
-                  <p>Quantidade disponível:</p>
-                  <div className="aba-mostrador">
-                    <p>3</p>
-                  </div>
-                </div>
-                <AbaContador limit={3}/>
-              </div>
-            </SplideSlide>
+      <Splide {... splide_config}>
+        {quartosList.map((quarto) => {
+            return (
+              <SplideSlide key={quarto.type}><AbaQuarto data={quarto} /></SplideSlide>
+            );
+          })
+        }
       </Splide>
 
       <Footer />
