@@ -6,15 +6,14 @@ export default function Feedback() {
 
         <>
 
-            <div className="container ">
-                <div className="flex items-center justify-center mt-4 "><img src="src/assets/logo.png" alt="Logo" height="67" width="75" /></div>
+            <div className="container mx-auto">
                 <div className="mt-12 lg:mt-16 text-5xl flex items-center justify-center">Feedback</div>
                 <div className="mt-6 lg:mt-12 lg:flex">
                     <div className="p-8 lg:max-w-1/2">
                         <p className="xl:text-lg">Conte para nós como foi passar esse tempo conosco! Seu comentário é muito importante para que possamos
                             aprimorar ainda mais nossos serviços!
                         </p>
-                        <p className="xl:text-lg">Agradecemos pela confiança durante sua estadia, volte sempre!!</p>
+                        <p className="mt-4 xl:text-lg">Agradecemos pela confiança durante sua estadia, volte sempre!!</p>
                     </div>
                     <div className="bg-[#D9D9D9] p-8 rounded-md">
                         <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
