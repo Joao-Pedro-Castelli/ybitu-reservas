@@ -47,7 +47,7 @@ export default function BarraProgresso(prop: {step: 0 | 1 | 2 }) {
     <div className="reserva-header">
       <h1>Reserva em andamento</h1>
       <div id="progresso">
-        {prop.step != 0 && <button id="etapas-prev" onClick={() => move_page("prev")} />}
+        {prop.step != 0 && <button id="etapas-prev" className="mouse-reaction" onClick={() => move_page("prev")} />}
 
         <article id="barra" className="hidden lg:flex">
           {steps_divs}
@@ -57,7 +57,7 @@ export default function BarraProgresso(prop: {step: 0 | 1 | 2 }) {
           <h2>{steps_list[prop.step]}</h2>
         </article>
 
-        {prop.step != last_step && <button id="etapas-next" onClick={() => move_page("next")} />}
+        {prop.step != last_step && <button id="etapas-next" className="mouse-reaction" onClick={() => move_page("next")} />}
       </div>
     </div>
   )

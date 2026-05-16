@@ -1,17 +1,16 @@
-import { useState } from "react";
+import QuartoDuploImage from "../assets/quartos/QuartoCasal.jpeg";
+import QuartoTriploImage from "../assets/quartos/QuartoTriplo.jpeg";
+import QuartoQuadruploImage from "../assets/quartos/QuartoQuadruplo.jpeg";
 import { Splide, SplideSlide, type SplideProps } from "@trg69/react-splide";
 import BarraProgresso from "../components/BarraProgresso";
 
 // import css
 import "@trg69/react-splide/css";
 import "../styles/Quartos.scss";
-import Footer from "../components/Footer";
 
-import QuartoDuploImage from "../assets/quartos/QuartoCasal.jpeg";
-import QuartoTriploImage from "../assets/quartos/QuartoTriplo.jpeg";
-import QuartoQuadruploImage from "../assets/quartos/QuartoQuadruplo.jpeg";
+import { type stateOp } from "../types.ts";
+import { useState } from "react";
 
-type stateOp<T> = (c: T) => void;
 function AbaContador(prop: {count: number, limit: number, sub: stateOp<number>, add: stateOp<number>}) {
   return (
       <>
@@ -163,8 +162,7 @@ export default function Quartos() {
         }
       </Splide>
 
-      <Footer />
+      <footer className="bg-wave" />
     </>
   );
 }
-      // <footer className="wave" />

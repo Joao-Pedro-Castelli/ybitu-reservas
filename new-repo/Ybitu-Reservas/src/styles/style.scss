@@ -7,11 +7,10 @@
   $inter-font-path: 'inter-ui/variable'
 );
 
-$bootstrap-icons-font-dir: "bootstrap-icons/font/fonts";
-@import "tailwindcss";
-@import "bootstrap-icons/font/bootstrap-icons";
+@use "tailwindcss";
+@use "bootstrap-icons/font/bootstrap-icons" with ($bootstrap-icons-font-dir: "bootstrap-icons/font/fonts"
+);
 
-$cor-background: #F5F0E6;
 $branco: #ffffff;
 $preto: #000000;
 $cinza: #BCBCBC;
@@ -19,6 +18,7 @@ $cor-primaria: #1f6f50;
 $cor-primaria-leve: #36A366;
 $cor-secundaria: #f4c430;
 $cor-terciaria: #272623;
+$cor-background: #F5F0E6;
 
 :root {
   --cor-background: #F5F0E6;
@@ -56,11 +56,11 @@ header {
   width: 100vw;
 }
 
-button {
+/* for all elements that should react from hovering */
+.mouse-reaction {
   cursor: pointer;
 }
 
-/* for all elements that should react from hovering */
 .mouse-reaction:hover {
   transform: scale(1.08);
   transition-duration: 0.2s;
@@ -75,15 +75,6 @@ button {
 .navbar-nav {
   width: 100%;
 }
-
-/* @include media-breakpoint-up(lg) { */
-/* .navbar-nav { */
-/* display: flex; */
-/* flex-direction: row; */
-/* justify-content: space-evenly; */
-/* align-items: center; */
-/* } */
-/* } */
 
 .navbar-brand {
   margin-left: 5%;
@@ -125,12 +116,12 @@ button {
   margin-right: 1rem;
 }
 
-footer.wave {
+footer.bg-wave {
   width: 100vw;
   height: 148px;
   position: fixed;
   bottom: 0;
-  z-index: -1;
+  z-index: -10;
 
   background-image: url("/src/assets/footer_wave.png");
   background-size: max(100vw, 800px) 148px;

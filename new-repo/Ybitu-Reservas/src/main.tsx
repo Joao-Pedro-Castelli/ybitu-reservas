@@ -15,7 +15,7 @@ createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route index element={<Quartos />} />
+        <Route index element={<Cadastro />} />
         <Route path="cadastro" element={<Cadastro />} />
         <Route path="Quartos" element={<Quartos />} />
         <Route path="Pagamento" element={<Pagamento />} />
