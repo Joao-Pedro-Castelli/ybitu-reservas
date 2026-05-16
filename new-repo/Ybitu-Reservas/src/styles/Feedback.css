@@ -9,7 +9,7 @@
 }
 
 .input_text{
-    @apply bg-[#F5F0E6] py-3 px-3 border rounded;
+    @apply bg-[var(--cor-background)] py-3 px-3 border rounded;
 }
 
 .titulo{
@@ -26,5 +26,5 @@
 }
 
 .btn_style{
-    @apply bg-[#1F6F50] text-white p-3 rounded md:col-span-2;
+    @apply bg-[var(-cor-primaria)] text-white p-3 rounded md:col-span-2;
 }
