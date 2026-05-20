@@ -2,33 +2,6 @@
 
 $base-pad: 4;
 
-dialog.popup:modal {
-  position: fixed;
-  left: calc(50vw - 180px);
-  top: calc(50vh - 110px);
-
-  div.pop-confirm {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-
-    width: 360px;
-    height: 220px;
-    background-color: style.$cor-background;
-
-    button {
-      width: 120px;
-      height: 60px;
-      background-color: style.$branco;
-      border: solid 2px style.$preto
-    }
-  }
-}
-
-dialog.popup::backdrop {
-  background-color: rgba(0, 0, 0, 0.7);
-}
 
 main {
   display: flex;
@@ -137,6 +110,26 @@ main {
   }
 }
 
+div.pop-confirm {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+
+  background-color: style.$cor-background;
+
+  h2 {
+    padding: 0 20px;
+  }
+
+  button {
+    width: 120px;
+    height: 60px;
+    background-color: style.$branco;
+    border: solid 2px style.$preto
+  }
+}
+
 /* 768px */
 @media (width >=48rem) {
   main {
@@ -181,6 +174,14 @@ main {
         margin-bottom: calc(var(--spacing) * 1.5 * $base-pad);
         font-size: 1.2rem;
       }
+    }
+  }
+
+  div.pop-confirm {
+    button {
+      width: 40%;
+      height: 30%;
+      font-size: 1.2rem;
     }
   }
 }

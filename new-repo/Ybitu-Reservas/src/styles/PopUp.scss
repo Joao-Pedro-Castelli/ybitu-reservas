@@ -1,0 +1,30 @@
+@use "./style.scss";
+
+dialog.popup:modal {
+  $h: 360px;
+  $w: 320px;
+
+  position: fixed;
+  left: calc(50vw - ($h / 2));
+  top: calc(50vh - ($w / 2));
+
+  height: $h;
+  width: $w;
+}
+
+/* 768px */
+@media (width >=48rem) {
+  $h: 15vh;
+  $w: 20vw;
+
+  position: fixed;
+  left: calc(50vw - ($h / 2));
+  top: calc(50vh - ($w / 2));
+
+  height: $h;
+  width: $w;
+}
+
+dialog.popup::backdrop {
+  background-color: rgba(0, 0, 0, 0.75);
+}

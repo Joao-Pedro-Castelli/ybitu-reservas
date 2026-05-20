@@ -1,33 +1,14 @@
 // project components
 import BarraProgresso from "../components/BarraProgresso";
+import PopUp from "../components/PopUp.tsx";
 import { type ResumoData, type stateOp } from "../types.ts";
 // external libraries
-import React, { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Pencil, Trash } from "lucide-react";
 
 // imrt styles
 import "../styles/Pagamento.scss";
 
-// a popup that opens when modalState is true and locks the webpage
-function PopUp(props: { modalState: boolean, children?: React.ReactNode }) {
-  const modalRef = useRef<HTMLDialogElement>(null);
-
-  useEffect(() => {
-    if (props.modalState == true) {
-      modalRef.current?.showModal();
-      return;
-    }
-    modalRef.current?.close();
-  });
-  
-  return(
-    <>
-      <dialog ref={modalRef} className="popup">
-        {props.children}
-      </dialog>
-    </>
-  )
-}
 
 // delFn (delete function) actually just opens the popup to confirm that this item will be deleted
 function ReservaResumo(props: { data: ResumoData, delFn: stateOp<{open: boolean, id: string}> }) {
