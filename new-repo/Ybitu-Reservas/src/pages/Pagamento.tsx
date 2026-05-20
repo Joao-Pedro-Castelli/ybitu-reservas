@@ -2,17 +2,39 @@
 import BarraProgresso from "../components/BarraProgresso";
 import { type ResumoData, type stateOp } from "../types.ts";
 // external libraries
-import { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Pencil, Trash } from "lucide-react";
 
 // imrt styles
 import "../styles/Pagamento.scss";
 
-function ReservaResumo(prop: { data: ResumoData, delFn: stateOp<string> }) {
+// a popup that opens when modalState is true and locks the webpage
+function PopUp(props: { modalState: boolean, children?: React.ReactNode }) {
+  const modalRef = useRef<HTMLDialogElement>(null);
 
-  const reservaList = prop.data.items.map(
+  useEffect(() => {
+    if (props.modalState == true) {
+      modalRef.current?.showModal();
+      return;
+    }
+    modalRef.current?.close();
+  });
+  
+  return(
+    <>
+      <dialog ref={modalRef} className="popup">
+        {props.children}
+      </dialog>
+    </>
+  )
+}
+
+// delFn (delete function) actually just opens the popup to confirm that this item will be deleted
+function ReservaResumo(props: { data: ResumoData, delFn: stateOp<{open: boolean, id: string}> }) {
+
+  const reservaList = props.data.items.map(
     (item, i) => {
-      const key = prop.data.key + "-it" + i.toString();
+      const key = props.data.key + "-it" + i.toString();
       return (
         <li key={key}>{item}</li>
       );
@@ -22,15 +44,15 @@ function ReservaResumo(prop: { data: ResumoData, delFn: stateOp<string> }) {
   return (
     <div className="opcao-reserva">
       <div className="reserva-titulo">
-        <h3>{prop.data.title}</h3>
+        <h3>{props.data.title}</h3>
         <div className="flex gap-1">
           <Pencil className="mouse-reaction" />
-          <Trash className="mouse-reaction" onClick={() => prop.delFn(prop.data.key)} />
+          <Trash className="mouse-reaction" onClick={() => props.delFn({open: true, id: props.data.key})} />
         </div>
       </div>
 
       <div className="flex flex-col items-left">
-        <p className="reserva-data">Data: {prop.data.date_in} &#x2192; {prop.data.date_out}</p>
+        <p className="reserva-data">Data: {props.data.date_in} &#x2192; {props.data.date_out}</p>
         <p>Items:</p>
         <ul className="reserva-quarto">
           {reservaList}
@@ -61,12 +83,17 @@ const resumoInitial: ResumoData[] = [
 export default function Pagamento() {
   // state for the list of reservas
   const [resumoList, setResumoList] = useState(resumoInitial);
+  // whether the popup for confirmation of deletion should be open
+  // and what item called it
+  const [popConfirm, setPopConfirm] = useState({ open: false, id: ""});
 
   // when the user clicks the trash button, remove the element from the list
-  const deleteResumo = (id: string) => {
-    setResumoList(resumoList.filter((resumo) => resumo.key != id));
+  const deleteResumo = (isDel: boolean) => {
+    if (isDel) {
+      setResumoList(resumoList.filter((resumo) => resumo.key != popConfirm.id));
+    }
+    setPopConfirm({open: false, id: ""});
   };
-
 
   return (
   <>  
@@ -103,13 +130,20 @@ export default function Pagamento() {
         </div>
         <div id="pagamento-lista">
           {resumoList.map((resumo) =>
-            <ReservaResumo key={resumo.key} data={resumo} delFn={deleteResumo}/>)
+            <ReservaResumo key={resumo.key} data={resumo} delFn={setPopConfirm}/>)
           }
         </div>
         <a id="pagamento-botao" className="mouse-reaction" href="/feedback">CONCLUIR RESERVA</a>
       </aside>
+
+      <PopUp modalState={popConfirm.open}>
+        <div className="pop-confirm">
+          <h2>Você realmente deseja deletar esta reserva?</h2>
+          <button className="mouse-reaction" onClick={() => deleteResumo(true)}>Deletar</button>
+          <button className="mouse-reaction" onClick={() => deleteResumo(false)}>Não deletar</button>
+        </div>
+      </PopUp>
     </main>
   </ >
   );
 }
-    // <footer className="wave"/>
