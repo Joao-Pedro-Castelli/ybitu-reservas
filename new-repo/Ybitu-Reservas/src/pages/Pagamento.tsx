@@ -1,7 +1,7 @@
 // project components
 import BarraProgresso from "../components/BarraProgresso";
-import PopUp from "../components/PopUp.tsx";
-import { type ResumoData, type stateOp } from "../types.ts";
+import PopUp, { type PopUpState } from "../components/PopUp.tsx";
+import { type ResumoData, type stateOp, type ReservaID } from "../types.ts";
 // external libraries
 import { useState } from "react";
 import { Pencil, Trash } from "lucide-react";
@@ -9,9 +9,10 @@ import { Pencil, Trash } from "lucide-react";
 // imrt styles
 import "../styles/Pagamento.scss";
 
+type popFn = stateOp<PopUpState<ReservaID>>;
 
 // delFn (delete function) actually just opens the popup to confirm that this item will be deleted
-function ReservaResumo(props: { data: ResumoData, delFn: stateOp<{open: boolean, id: string}> }) {
+function ReservaResumo(props: { data: ResumoData, editFn: popFn, delFn: popFn }) {
 
   const reservaList = props.data.items.map(
     (item, i) => {
@@ -21,14 +22,16 @@ function ReservaResumo(props: { data: ResumoData, delFn: stateOp<{open: boolean,
       );
     }
   );
-   
+
+  const popSt = {open: true, data: {id: props.data.key}};
+  
   return (
     <div className="opcao-reserva">
       <div className="reserva-titulo">
         <h3>{props.data.title}</h3>
         <div className="flex gap-1">
-          <Pencil className="mouse-reaction" />
-          <Trash className="mouse-reaction" onClick={() => props.delFn({open: true, id: props.data.key})} />
+          <Pencil className="mouse-reaction" onClick={() => props.editFn(popSt)}/>
+          <Trash className="mouse-reaction" onClick={() => props.delFn(popSt)} />
         </div>
       </div>
 
@@ -66,15 +69,23 @@ export default function Pagamento() {
   const [resumoList, setResumoList] = useState(resumoInitial);
   // whether the popup for confirmation of deletion should be open
   // and what item called it
-  const [popConfirm, setPopConfirm] = useState({ open: false, id: ""});
+  const [popDelete, setPopDelete] = useState({ open: false, data: {id: ""}} as PopUpState<ReservaID>);
+  const [popEdit, setPopEdit] = useState({ open: false, data: {id: ""}} as PopUpState<ReservaID>);
 
   // when the user clicks the trash button, remove the element from the list
   const deleteResumo = (isDel: boolean) => {
     if (isDel) {
-      setResumoList(resumoList.filter((resumo) => resumo.key != popConfirm.id));
+      setResumoList(resumoList.filter((resumo) => resumo.key != popDelete.data.id));
     }
-    setPopConfirm({open: false, id: ""});
+    setPopDelete({open: false, data: {id: ""}});
   };
+
+  const editResumo = (isEdit: boolean) => {
+    if (isEdit) {
+      window.location.href = "quartos";
+    }
+    setPopEdit({open: false, data: {id: ""}});
+  }
 
   return (
   <>  
@@ -111,17 +122,26 @@ export default function Pagamento() {
         </div>
         <div id="pagamento-lista">
           {resumoList.map((resumo) =>
-            <ReservaResumo key={resumo.key} data={resumo} delFn={setPopConfirm}/>)
+            <ReservaResumo key={resumo.key} data={resumo} editFn={setPopEdit} delFn={setPopDelete}/>)
           }
         </div>
         <a id="pagamento-botao" className="mouse-reaction" href="/feedback">CONCLUIR RESERVA</a>
       </aside>
 
-      <PopUp modalState={popConfirm.open}>
+      <PopUp modalState={popDelete.open}>
         <div className="pop-confirm">
           <h2>Você realmente deseja deletar esta reserva?</h2>
+          <p>Essa ação não poderá ser desfeita.</p>
           <button className="mouse-reaction" onClick={() => deleteResumo(true)}>Deletar</button>
           <button className="mouse-reaction" onClick={() => deleteResumo(false)}>Não deletar</button>
+        </div>
+      </PopUp>
+      <PopUp modalState={popEdit.open}>
+        <div className="pop-confirm">
+          <h2>Você deseja editar esta reserva?</h2>
+          <p>O site voltará a página de data, com seus dados salvos</p>
+          <button className="mouse-reaction" onClick={() => editResumo(true)}>Editar</button>
+          <button className="mouse-reaction" onClick={() => editResumo(false)}>Fechar</button>
         </div>
       </PopUp>
     </main>

@@ -5,8 +5,8 @@ dialog.popup:modal {
   $w: 320px;
 
   position: fixed;
-  left: calc(50vw - ($h / 2));
-  top: calc(50vh - ($w / 2));
+  left: calc(50vw - ($w / 2));
+  top: calc(50vh - ($h / 2));
 
   height: $h;
   width: $w;
@@ -14,15 +14,16 @@ dialog.popup:modal {
 
 /* 768px */
 @media (width >=48rem) {
-  $h: 15vh;
-  $w: 20vw;
+  dialog.popup:modal {
+    $h: 30vh;
+    $w: 30vw;
 
-  position: fixed;
-  left: calc(50vw - ($h / 2));
-  top: calc(50vh - ($w / 2));
+    left: calc(50vw - ($w / 2));
+    top: calc(50vh - ($h / 2));
 
-  height: $h;
-  width: $w;
+    height: $h;
+    width: $w;
+  }
 }
 
 dialog.popup::backdrop {

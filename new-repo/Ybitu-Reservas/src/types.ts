@@ -7,3 +7,5 @@ export type ResumoData = {
   date_out: string,
   items: string[]
 }
+
+export type ReservaID = {id: string};
