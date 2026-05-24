@@ -44,7 +44,7 @@ export default function BarraProgresso(prop: {step: 0 | 1 | 2 }) {
 
     
   return (
-    <div className="reserva-header">
+    <div className="reserva-header mt-24">
       <h1>Reserva em andamento</h1>
       <div id="progresso">
         {prop.step != 0 && <button id="etapas-prev" className="mouse-reaction" onClick={() => move_page("prev")} />}
