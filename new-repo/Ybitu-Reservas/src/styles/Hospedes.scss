@@ -1,0 +1,36 @@
+@use "./style.scss";
+
+#hospede-div {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas: "vazio formulario lista";
+}
+
+.hospede-dados {
+  grid-area: formulario;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+
+  height: 100%;
+  padding-bottom: 20px;
+  color: style.$branco;
+  background-color: style.$preto;
+
+  .hospede-input {
+    width: 70%;
+
+    input {
+      width: 100%;
+      aspect-ratio: 6;
+
+      color: style.$preto;
+      background-color: style.$cor-background;
+      border-radius: 10px;
+    }
+  }
+}

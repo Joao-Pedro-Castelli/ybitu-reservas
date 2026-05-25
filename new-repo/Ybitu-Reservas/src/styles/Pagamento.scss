@@ -1,6 +1,6 @@
 @use "./style.scss";
 
-main {
+#pagamento-main {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -116,7 +116,7 @@ div.pop-confirm {
 
 /* 768px */
 @media (width >=48rem) {
-  main {
+  #pagamento-main {
     section {
       a {
         $h: 80px;
@@ -165,7 +165,7 @@ div.pop-confirm {
 
 /* 1024px */
 @media (width >=64rem) {
-  main {
+  #pagamento-main {
     flex-direction: row;
     align-items: start;
     justify-content: space-evenly;

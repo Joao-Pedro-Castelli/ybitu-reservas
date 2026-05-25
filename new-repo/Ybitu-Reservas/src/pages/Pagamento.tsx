@@ -89,9 +89,9 @@ export default function Pagamento() {
 
   return (
   <>  
-    <BarraProgresso step={2} />
+    <BarraProgresso step={3} />
 
-    <main>
+    <main id="pagamento-main">
       <section>
         <h2>Como concluir a reserva</h2>
         <p>

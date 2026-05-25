@@ -3,11 +3,11 @@ import type { JSX } from "react";
 import "../styles/BarraProgresso.scss"
 
 // if you change the number of steps, change etapa_position if statement
-export default function BarraProgresso(prop: {step: 0 | 1 | 2 }) {
+export default function BarraProgresso(prop: {step: 0 | 1 | 2 | 3 }) {
   type status = "done" | "on-going" | "not-yet"
 
-  const steps_list: string[] = ["Data", "Quartos", "Pagamento"];
-  const last_step = 2;
+  const steps_list: string[] = ["Data", "Quartos", "Hóspedes", "Pagamento"];
+  const last_step = steps_list.length - 1;
   
   const steps_divs: JSX.Element[] = steps_list.map((step_name, i) => {
     let etapa_status: status = "done";

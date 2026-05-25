@@ -8,6 +8,7 @@ import Login from "./pages/Login.tsx";
 import Home from "./pages/Home.tsx";
 import Cadastro from "./pages/Cadastro.tsx";
 import Quartos from "./pages/Quartos.tsx";
+import Hospedes from "./pages/Hospedes.tsx";
 import Pagamento from "./pages/Pagamento.tsx";
 import Feedback from "./pages/Feedback.tsx";
 import Contato from "./pages/Contato.tsx";
@@ -22,15 +23,16 @@ createRoot(document.getElementById("root")!).render(
 
         <div className="pt-24">
           <Routes>
-            <Route path="login" element={<Login />} />
             <Route index element={<Home />} />
-            <Route path="home" element={<Home />} />
-            <Route path="cadastro" element={<Cadastro />} />
-            <Route path="Quartos" element={<Quartos />} />
-            <Route path="Pagamento" element={<Pagamento />} />
-            <Route path="feedback" element={<Feedback />} />
-            <Route path="contato" element={<Contato />} />
+            <Route path="Home" element={<Home />} />
+            <Route path="Contato" element={<Contato />} />
+            <Route path="Cadastro" element={<Cadastro />} />
+            <Route path="Login" element={<Login />} />
             <Route path="Datas" element={<Datas />} />
+            <Route path="Quartos" element={<Quartos />} />
+            <Route path="Hóspedes" element={<Hospedes />} />
+            <Route path="Pagamento" element={<Pagamento />} />
+            <Route path="Feedback" element={<Feedback />} />
           </Routes>
         </div>
 
