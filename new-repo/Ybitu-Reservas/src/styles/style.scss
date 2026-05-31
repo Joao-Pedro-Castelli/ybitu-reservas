@@ -18,7 +18,8 @@ $cor-secundaria: #f4c430;
 $cor-terciaria: #272623;
 $cor-background: #F5F0E6;
 $shadow-color: rgba(0, 0, 0, 0.342);
-$base-pad: 4;
+$base-pad: 4; // use for padding together with tailwind's --spacing
+$side-margin: calc(4 * var(--spacing)); // margin to reduce width in mobile
 
 :root {
   --cor-background: #F5F0E6;
