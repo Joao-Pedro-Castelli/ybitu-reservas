@@ -30,9 +30,8 @@ model Pessoa {
   
 model Adulto {
   // Colunas da tabela Adulto
-  id       Int    @id @default(autoincrement())
   telefone String
-  idPessoa Int    @unique
+  idPessoa Int    @id
   // Relação com as demais tabelas
   pessoa   Pessoa    @relation(fields: [idPessoa], references: [id])
   user     User? // Relação 1 - 0..1 (Um adulto pode ser um user ou não)
@@ -41,21 +40,19 @@ model Adulto {
 
 model Crianca {
   // Colunas tabela Criança
-  id       Int @id @default(autoincrement())
   idResp   Int
-  idPessoa Int @unique
+  idPessoa Int @id
   // Relação com as demais tabelas
-  responsavel Adulto @relation(fields: [idResp], references: [id])
+  responsavel Adulto @relation(fields: [idResp], references: [idPessoa])
   pessoa      Pessoa @relation(fields: [idPessoa], references: [id])
 }
 
 model User {
   // Colunas tabela user
-  id       Int    @id @default(autoincrement())
-  idAdulto Int    @unique
+  idAdulto Int    @id
   senha    String
   // Relação com as demais tabelas
-  adulto Adulto @relation(fields: [idAdulto], references: [id])
+  adulto Adulto @relation(fields: [idAdulto], references: [idPessoa])
   Reservas Reserva[]
 }
 
@@ -85,18 +82,17 @@ model Reserva {
   // Relação 1-0..1(Teria que sempre que criar uma reserva criar junto o reservaQuartos 
   //para garantir a relação 1-1 desejada)
   reservaQuartos ReservaQuartos?
-  user User @relation(fields: [idUser],references: [id])
+  user User @relation(fields: [idUser],references: [idAdulto])
 
   @@id([idUser, dataReserva]) // Identificador da Reserva é o usuário e a data da reserva
 }
 
 model Acompanhante {
   // Colunas da tabela Acompanhante
-  id          Int      @id @default(autoincrement())
   reservaUser Int
   reservaData DateTime
   idPessoa    Int
-  @@unique([reservaUser, reservaData, idPessoa]) // força que esse trio seja unico para evitar duplicação de acompanhante
+  @@id([reservaUser, reservaData, idPessoa]) // força que esse trio seja unico para evitar duplicação de acompanhante
   // Relações com as demais tabelas
   pessoa  Pessoa  @relation(fields: [idPessoa], references: [id])
   reserva Reserva @relation(fields: [reservaUser, reservaData], references: [idUser, dataReserva])
