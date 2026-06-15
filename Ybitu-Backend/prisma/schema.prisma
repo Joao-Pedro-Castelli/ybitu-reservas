@@ -19,7 +19,7 @@ model Pessoa {
   // Colunas da tabela Pessoa
   id           Int            @id @default(autoincrement())
   nome         String
-  data         DateTime
+  dataNasc     DateTime
   sexo         String
   // Relações com as demais tabelas
   adulto       Adulto? // Relação 1 - 0..1
