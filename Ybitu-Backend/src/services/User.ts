@@ -12,28 +12,25 @@ type UserCreateInput = {
 }
 
 export const createUser = async (props: UserCreateInput) => {
-    const pessoa = await prisma.pessoa.findUnique({
+    const adult = await prisma.adulto.findUnique({
         where: {
             email: props.email
         },
         include: {
-            adulto: {
-                include: {
-                    user: true
-                }
-            }
+            user: true,
+            pessoa: true
         }
     });
 
-    if (!pessoa) {
+    if (!adult) {
         const user = await prisma.pessoa.create({
             data: {
                 nome: props.nome,
                 data: props.data,
-                email: props.email,
                 sexo: props.sexo,
                 adulto: {
                     create: {
+                        email: props.email,
                         telefone: props.telefone,
                         user: {
                             create: {
@@ -46,35 +43,13 @@ export const createUser = async (props: UserCreateInput) => {
         })
         return true;
     }
-    if (!pessoa.adulto) {
-        await prisma.adulto.create({
-            data: {
-                telefone: props.telefone,
-                user: {
-                    create: {
-                        senha: props.senha
-                    }
-                },
 
-                pessoa: {
-                    connect:{
-                        id: pessoa.id
-                    }
-                }
-            }
-        })
-        return true;
-    }
-    if(!pessoa.adulto.user){
+    if (!adult.user) {
         await prisma.user.create({
             data: {
                 senha: props.senha,
-                adulto: {
-                    connect: {
-                        id: pessoa.adulto.idPessoa
-                    }
-                }
-            }
+                idAdulto: adult.idPessoa,
+            },
         })
         return true;
     }
@@ -87,40 +62,34 @@ type LoginInput = {
     senha: string
 }
 
-export const loginUser = async (props: LoginInput) =>{
-    const user = await prisma.pessoa.findUnique({
+export const loginUser = async (props: LoginInput) => {
+    const adult = await prisma.adulto.findUnique({
         where: {
             email: props.email
         },
         include: {
-            adulto: {
-                include: {
-                    user: true
-                }
-            }
+            pessoa: true,
+            user: true,
         }
     });
 
-    if(!user || !user.adulto ||!user.adulto.user ){
+    if(!adult || !adult.user){
         return false;
     }
 
-    if(user.adulto.user.senha === props.senha){
+    if(adult.user.senha === props.senha){
         return true
     }
 }
 
-export const userData = async (email: string) =>{
-    const user = await prisma.pessoa.findUnique({
+export const userData = async (email: string) => {
+    const user = await prisma.adulto.findUnique({
         where: {
             email: email
         },
         include: {
-            adulto: {
-                include: {
-                    user: true
-                }
-            }
+            pessoa: true,
+            user: true
         }
     })
 
