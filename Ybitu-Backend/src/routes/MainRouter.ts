@@ -37,9 +37,9 @@ MainRouter.post("/user", async (req, res) => {
             const user = await createUser(userData);
 
             if (user) {
-                return res.json({ msg: "Cadastrado com Sucesso" });
+                return res.status(201).json({ msg: "Cadastrado com Sucesso" });
             }
-            return res.json({ msg: "Usuário já cadastrado" });
+            return res.status(400).json({ msg: "Usuário já cadastrado" });
 
         } catch (err) {
             console.error(JSON.stringify(err, null, 2));

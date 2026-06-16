@@ -29,6 +29,9 @@ export default function Cadastro() {
         })
         const data = await response.json()
         console.log(data);
+        if (response.status == 201) {
+            window.location.href = "/Login";
+        }
     }
 
     return (
