@@ -19,7 +19,7 @@ export default function Profile({user}: {user: userProps}) {
                         </div>
 
                     </div>
-                    <button className="p-2 w-fit h-fit rounded bg-red-500 font-bold text-[var(--cor-background)] ">Apagar conta</button>
+                    <button className="cursor-pointer p-2 w-fit h-fit rounded bg-red-500 font-bold text-[var(--cor-background)] ">Apagar conta</button>
                 </div>
             </div>
             <form className="mt-10 grid grid-cols-2 max-w-fit gap-10  mx-auto" action="">

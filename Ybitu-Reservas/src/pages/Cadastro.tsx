@@ -9,6 +9,7 @@ export default function Cadastro() {
     const [sexoInput, setSexoInput] = useState("");
     const [dataInput, setDataInput] = useState("");
     const [telInput, setTelInput] = useState("")
+    const [alerta,setAlerta] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -31,6 +32,10 @@ export default function Cadastro() {
         console.log(data);
         if (response.status == 201) {
             window.location.href = "/Login";
+            
+        }
+        else{
+            alert("Erro no cadastro. Tente novamente.")
         }
     }
 
