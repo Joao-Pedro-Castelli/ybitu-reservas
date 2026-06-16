@@ -1,8 +1,8 @@
 import { prisma } from "../libs/prisma.js";
 import { Prisma } from "../generated/prisma/client.js";
-import type { UserLogin, UserSignup } from "../types.js";
+import type { LoginInput, SignupInput } from "../types.js";
 
-export const createUser = async (props: UserSignup) => {
+export const createUser = async (props: SignupInput) => {
     const adult = await prisma.adulto.findUnique({
         where: {
             email: props.email
@@ -31,7 +31,11 @@ export const createUser = async (props: UserSignup) => {
                     }
                 }
             }
-        })
+        });
+        if (!user) {
+            console.log("Erro ao criar tupla Pessoa.");
+            return false;
+        }
         return true;
     }
 
@@ -48,7 +52,7 @@ export const createUser = async (props: UserSignup) => {
     return false;
 }
 
-export const loginUser = async (props: UserLogin) => {
+export const loginUser = async (props: LoginInput) => {
     const adult = await prisma.adulto.findUnique({
         where: {
             email: props.email

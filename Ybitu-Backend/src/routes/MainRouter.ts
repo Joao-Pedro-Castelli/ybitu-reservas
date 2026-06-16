@@ -1,9 +1,10 @@
 import express from "express";
-import { createUser, isUserInput, loginUser, userData, type LoginInput, type UserInput } from "../services/User.js";
+import { createUser, loginUser, userData } from "../services/User.js";
+import { type LoginInput, isSignupInput } from "../types.js";
 
 const MainRouter = express.Router();
 
-MainRouter.get("/", (req, res) => {
+MainRouter.get("/", (_req, res) => {
     res.json({ msg: "Oiii" });
 });
 
@@ -31,7 +32,7 @@ MainRouter.post("/user", async (req, res) => {
     console.log("a rota foi chamada");
     const userData = req.body;
 
-    if (isUserInput(userData)) {
+    if (isSignupInput(userData)) {
         try {
             const user = await createUser(userData);
 
@@ -61,6 +62,5 @@ MainRouter.get("/user/data", async (req: {query: {email: string}}, res) => {
         return res.status(500).json({error: "Erro do servidor"});
     }
 });
-
 
 export default MainRouter;

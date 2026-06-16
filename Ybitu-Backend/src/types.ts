@@ -1,11 +1,11 @@
 import { isDate } from "util/types"
 
-type UserLogin = {
+type LoginInput = {
     email: string,
     senha: string
 }
 
-type UserSignup = {
+type SignupInput = {
     nome: string
     email: string
     dataNasc: Date
@@ -14,7 +14,7 @@ type UserSignup = {
     senha: string
 }
 
-function isUserSignup(arg: any): arg is UserSignup {
+function isSignupInput(arg: any): arg is SignupInput {
     // cannot be null
     if (!arg) {
         return false;
@@ -42,7 +42,7 @@ function isUserSignup(arg: any): arg is UserSignup {
     return true;
 }
 
-export { type UserLogin, type UserSignup, isUserSignup };
+export { type LoginInput, type SignupInput, isSignupInput };
 
 // types from Ybitu-Reservas; needs to be sincronized with that file
 export type stateOp<T> = (c: T) => void;
