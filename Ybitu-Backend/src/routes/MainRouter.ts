@@ -9,7 +9,7 @@ MainRouter.get("/", (_req, res) => {
 });
 
 // User tries to login
-MainRouter.get("/user", async (req: {body: LoginInput} , res) => {
+MainRouter.post("/user/login", async (req: {body: LoginInput} , res) => {
     const login_input = req.body;
 
      try {

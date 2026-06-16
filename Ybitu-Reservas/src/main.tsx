@@ -15,32 +15,33 @@ import Contato from "./pages/Contato.tsx";
 import Datas from "./pages/Datas.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Usuario from "./pages/Usuario.tsx";
+import { AuthProvider } from "./context/AuthContext"
 
 import "./styles/style.scss"
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
-        <Header />
-
-        <div className="pt-24">
-          <Routes>
-            <Route index element={<Home />} />
-            <Route path="Home" element={<Home />} />
-            <Route path="Contato" element={<Contato />} />
-            <Route path="Cadastro" element={<Cadastro />} />
-            <Route path="Login" element={<Login />} />
-            <Route path="Data" element={<Datas />} />
-            <Route path="Quartos" element={<Quartos />} />
-            <Route path="Hóspedes" element={<Hospedes />} />
-            <Route path="Pagamento" element={<Pagamento />} />
-            <Route path="Feedback" element={<Feedback />} />
-            <Route path="Usuario" element={<Usuario />} />
-            <Route path="*" element={<NotFound/>}></Route>
-          </Routes>
-        </div>
-
-        <Footer />
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+          <Header />
+          <div className="pt-24">
+            <Routes>
+              <Route index element={<Home />} />
+              <Route path="Home" element={<Home />} />
+              <Route path="Contato" element={<Contato />} />
+              <Route path="Cadastro" element={<Cadastro />} />
+              <Route path="Login" element={<Login />} />
+              <Route path="Data" element={<Datas />} />
+              <Route path="Quartos" element={<Quartos />} />
+              <Route path="Hóspedes" element={<Hospedes />} />
+              <Route path="Pagamento" element={<Pagamento />} />
+              <Route path="Feedback" element={<Feedback />} />
+              <Route path="Usuario" element={<Usuario />} />
+              <Route path="*" element={<NotFound/>}></Route>
+            </Routes>
+          </div>
+          <Footer />
+      </BrowserRouter>
+    </AuthProvider>
   </StrictMode>,
 )
