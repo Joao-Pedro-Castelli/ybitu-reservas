@@ -27,7 +27,7 @@ export default function Header() {
     ];
 
     const authLinks = isLoggedIn
-        ? [{ to: "/Perfil", label: "Perfil" }]
+        ? [{ to: "/Usuario", label: "Perfil" }]
         : [{ to: "/Login", label: "Login" }, { to: "/Cadastro", label: "Cadastro" }]
 
     const allLinks = [...publicLinks, ...authLinks]

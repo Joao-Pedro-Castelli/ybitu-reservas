@@ -1,5 +1,12 @@
 import { UserCircle2 } from "lucide-react";
-export default function Profile() {
+
+type userProps = {
+    email: string
+    senha: string
+    nome: string
+}
+export default function Profile({user}: {user: userProps}) {
+   
     return (
         <>
             <div className="" >
@@ -7,8 +14,8 @@ export default function Profile() {
                     <div className="flex items-center justify-center ">
                         <UserCircle2 size={60}></UserCircle2>
                         <div className="ml-3 ">
-                            <div className="text-xl">Donatello da Silva</div>
-                            <div className="text-[12px]">donatellodasilva@gmail.com</div>
+                            <div className="text-xl">{user.nome}</div>
+                            <div className="text-[12px]">{user.email}</div>
                         </div>
 
                     </div>
@@ -18,15 +25,15 @@ export default function Profile() {
             <form className="grid grid-cols-2 max-w-fit gap-10  mx-auto" action="">
                 <div className="user_form_div">
                     <label htmlFor="nome">Nome:</label>
-                    <input className="user_form_option" type="text" id="nome" value={123456} />
+                    <input className="user_form_option" type="text" id="nome" value={user.nome} />
                 </div>
                 <div className="user_form_div">
                     <label htmlFor="email">E-mail:</label>
-                    <input className="user_form_option" type="email" id="email" value={123456} />
+                    <input className="user_form_option" type="email" id="email" value={user.email} />
                 </div>
                 <div className="user_form_div">
                     <label htmlFor="senha">Senha:</label>
-                    <input className="user_form_option" type="password" id="senha" value={123456} />
+                    <input className="user_form_option" type="password" id="senha" value={user.senha} />
                 </div>
             </form>
 

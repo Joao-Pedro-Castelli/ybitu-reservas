@@ -2,7 +2,8 @@ import { createContext, useContext, useState, ReactNode } from "react"
 
 type AuthContextType = {
     isLoggedIn: boolean
-    login: () => void
+    userEmail: string
+    login: (email:string) => void
     logout: () => void
 }
 
@@ -12,19 +13,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [isLoggedIn, setIsLoggedIn] = useState(
         () => localStorage.getItem("loggedIn") === "true"
     )
+    const [userEmail,setUserEmail] = useState(()=>{ return ""});
 
-    function login() {
+    function login(email:string) {
         localStorage.setItem("loggedIn", "true")
+        setUserEmail(email)
         setIsLoggedIn(true)
     }
 
     function logout() {
         localStorage.removeItem("loggedIn")
         setIsLoggedIn(false)
+        setUserEmail("")
     }
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+        <AuthContext.Provider value={{ isLoggedIn, login, logout, userEmail }}>
             {children}
         </AuthContext.Provider>
     )
