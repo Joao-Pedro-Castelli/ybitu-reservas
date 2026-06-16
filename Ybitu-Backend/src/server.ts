@@ -3,9 +3,11 @@ import express from "express";
 import helmet from "helmet";
 import MainRouter from "./routes/MainRouter.js";
 import { notDefined, serverError } from "./routes/ErroHandler.js";
-
+import cors from "cors";
 
 const server = express();
+
+server.use(cors())
 server.use(helmet());
 server.use(express.json());
 
