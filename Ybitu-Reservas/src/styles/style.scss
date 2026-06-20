@@ -1,0 +1,177 @@
+/* code to get inter fonts from npm into SCSS*/
+@use "inter-ui/default" with ($inter-font-display: swap,
+  $inter-font-path: 'inter-ui/web'
+);
+
+@use "inter-ui/variable" with ($inter-font-display: swap,
+  $inter-font-path: 'inter-ui/variable'
+);
+
+@use "tailwindcss";
+
+$branco: #ffffff;
+$preto: #000000;
+$preto-leve: #181715;
+$cinza: #BCBCBC;
+$cinza-leve: #D9D9D9;
+$cor-primaria: #1f6f50;
+$cor-primaria-leve: #36A366;
+$cor-secundaria: #f4c430;
+$cor-terciaria: #272623;
+$cor-background: #F5F0E6;
+$shadow-color: rgba(0, 0, 0, 0.342);
+$base-pad: 4; // use for padding together with tailwind's --spacing
+$side-margin: calc(4 * var(--spacing)); // margin to reduce width in mobile
+
+:root {
+  --cor-background: #F5F0E6;
+  --branco: #ffffff;
+  --preto: #000000;
+  --cor-primaria: #1f6f50;
+  --cor-secundaria: #f4c430;
+  --cor-terciaria: #272623;
+}
+
+body {
+  font-family: "Inter", "system-ui";
+
+  background-color: var(--cor-background) !important;
+}
+
+@supports (font-variation-settings: normal) {
+  body {
+    font-family: "InterVariable", "system-ui";
+  }
+}
+
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+h2 {
+  text-align: center;
+  font-size: 1.6em;
+  font-weight: 500;
+}
+
+h3 {
+  text-align: center;
+  font-size: 1.4em;
+  font-weight: 500;
+}
+
+header {
+  width: 100vw;
+}
+
+/* for all elements that should react from hovering */
+.mouse-reaction {
+  cursor: pointer;
+}
+
+.mouse-reaction:hover {
+  transform: scale(1.08);
+  transition-duration: 0.2s;
+}
+
+.btn_primary {
+  border-radius: 0.25rem;
+
+  font-weight: var(--font-weight-semibold);
+  color: $cor-background;
+
+  cursor: pointer;
+  background-color: $cor-primaria;
+}
+
+.secondary-button {
+  padding: 8px 8px;
+  margin-bottom: calc(var(--spacing) * $base-pad);
+
+  color: $preto;
+  font-weight: 600;
+  background-color: $cor-secundaria;
+  border-radius: 10px;
+}
+
+/* 768px */
+@media (width >=48rem) {
+  .secondary-button {
+    padding: 12px 12px;
+    margin-bottom: calc(var(--spacing) * 1.5 * $base-pad);
+    font-size: 1.2rem;
+  }
+}
+
+/* 1024px */
+@media (width >=64rem) {
+  .secondary-button {
+    padding: 8px 8px;
+    margin-bottom: calc(var(--spacing) * $base-pad);
+    font-size: 1.0rem;
+  }
+}
+
+.navbar {
+  min-height: 80px;
+  padding: 10px 2rem;
+  background-color: var(--cor-background) !important;
+}
+
+.navbar-nav {
+  width: 100%;
+}
+
+.navbar-brand {
+  margin-left: 5%;
+  font-size: 1.8rem;
+  color: var(--cor-secundaria) !important;
+  width: 104px;
+  height: 90px;
+}
+
+.nav-link {
+  color: var(--preto) !important;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.navbar .container-fluid {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#btn-carrinho .nav-link {
+  padding: 10px 16px;
+  width: auto;
+  height: auto;
+  background-color: var(--cor-primaria);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  color: var(--cor-background) !important;
+}
+
+#btn-carrinho i {
+  font-size: 42.25px;
+  color: var(--cor-secundaria);
+  margin-right: 1rem;
+}
+
+footer.bg-wave {
+  width: 100vw;
+  height: 148px;
+  position: fixed;
+  bottom: 0;
+  z-index: -10;
+
+  background-image: url("/src/assets/footer_wave.png");
+  background-size: max(100vw, 800px) 148px;
+  background-repeat: no-repeat;
+}
