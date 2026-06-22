@@ -1,7 +1,13 @@
 import { prisma } from "../libs/prisma.js";
 import type { LoginInput, SignupInput } from "../types.js";
 import { Prisma } from "../generated/prisma/client.js";
+import bcrypt from "bcryptjs";
+
 export const createUser = async (props: SignupInput) => {
+
+    const salt = bcrypt.genSaltSync()
+    const hash = bcrypt.hashSync(props.senha,salt)
+
     const adult = await prisma.adulto.findUnique({
         where: {
             email: props.email
@@ -24,7 +30,7 @@ export const createUser = async (props: SignupInput) => {
                         telefone: props.telefone,
                         user: {
                             create: {
-                                senha: props.senha
+                                senha: hash
                             }
                         }
                     }
@@ -41,7 +47,7 @@ export const createUser = async (props: SignupInput) => {
     if (!adult.user) {
         await prisma.user.create({
             data: {
-                senha: props.senha,
+                senha: hash,
                 idAdulto: adult.idPessoa,
             },
         })
@@ -62,7 +68,11 @@ export const loginUser = async (props: LoginInput) => {
         }
     });
 
-    if (adult?.user?.senha === props.senha) {
+    if(!adult?.user?.senha){
+        return false;
+    }
+
+    if (bcrypt.compareSync(props.senha,adult?.user?.senha)) {
         return true
     }
 
