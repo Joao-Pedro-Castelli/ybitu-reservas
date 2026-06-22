@@ -4,6 +4,7 @@ import { type LoginInput, isSignupInput } from "../types.js";
 import jwt from "jsonwebtoken";
 import multer from "multer"
 import path from "path"
+import { Auth } from "../middlewares/Auth.js";
 
 const upload = multer({ dest: path.resolve("uploads") });
 
@@ -23,8 +24,14 @@ router.post("/login", async (req: { body: LoginInput }, res) => {
         const user = await loginUser(login_input);
 
         if (user) {
-            const token = jwt.sign({ email: req.body.email }, secret, { expiresIn: "1h" });
-            return res.json({ msg: "Login realizado com sucesso", token });
+            const token = jwt.sign({ email: req.body.email }, secret, { expiresIn: "30m" });
+            res.cookie("token",token,{
+                httpOnly: true,
+                secure:true,
+                sameSite:"strict",
+                maxAge: 30*60*1000
+            })
+            return res.json({ msg: "Login realizado com sucesso" });
         }
         return res.json({ msg: "Dados inválidos" });
 
@@ -58,7 +65,7 @@ router.post("/", async (req, res) => {
 })
 
 // Client wants the data for a user with requested email
-router.get("/data", async (req: { query: { email: string } }, res) => {
+router.get("/data",Auth.private, async (req: { query: { email: string } }, res) => {
     const email = req.query.email;
     console.log("ROTA /user/data FOI CHAMADA");
     console.log("EMAIL:", email);
