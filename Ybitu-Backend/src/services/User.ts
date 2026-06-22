@@ -114,6 +114,12 @@ export const userBooking = async (email: string) => {
             checkIn: {
                 gte: new Date()
             }
+        },
+        select: {
+            checkIn: true,
+            checkOut: true,
+            numPessoas: true,
+            status: true
         }
     })
     return reservas;
