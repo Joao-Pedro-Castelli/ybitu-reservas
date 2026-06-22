@@ -65,13 +65,14 @@ router.post("/", async (req, res) => {
 })
 
 // Client wants the data for a user with requested email
-router.get("/data",Auth.private, async (req: { query: { email: string } }, res) => {
-    const email = req.query.email;
+router.get("/data",Auth.private, async (req, res) => {
+    const token = req.cookies.token;
+    const content = jwt.verify(token, process.env.JWT_SECRET_KEY as string) as JwtPayload;
     console.log("ROTA /user/data FOI CHAMADA");
-    console.log("EMAIL:", email);
+    console.log("EMAIL:", content.email);
 
     try {
-        res.json(await userData(email));
+        res.json(await userData(content.email));
     } catch (err) {
         console.log(err);
         return res.status(500).json({ error: "Erro do servidor" });

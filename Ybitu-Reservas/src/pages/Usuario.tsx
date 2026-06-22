@@ -23,7 +23,7 @@ export default function Usuario() {
     useEffect(() => {
         const profileHandler = async () => {
             if (userEmail != "") {
-                const response = await fetch(`http://localhost:3000/user/data?email=${userEmail}`,{credentials:"include"});
+                const response = await fetch(`http://localhost:3000/user/data`,{credentials:"include"});
                 const data = await response.json()
                 setUser({
                     email: data.email,
