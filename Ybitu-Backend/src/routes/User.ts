@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createUser, feedback, loginUser, userData } from "../services/User.js";
+import { createUser, feedback, loginUser, userBooking, userData } from "../services/User.js";
 import { type LoginInput, isSignupInput } from "../types.js";
 import jwt from "jsonwebtoken";
 import multer from "multer"
@@ -71,22 +71,34 @@ router.get("/data", async (req: { query: { email: string } }, res) => {
     }
 });
 
+router.get("/booking", async (req: { query: { email: string } }, res) => {
+    try {
+        let resposta = await userBooking(req.query.email);
+        console.log(resposta);
+        return res.status(201).json({ booking: resposta });
+    }
+    catch (err) {
+        console.log(err)
+        return res.status(500).json({ error: "Erro do servidor" })
+    }
+})
+
 router.post("/feedback", upload.array("photos", 3), async (req, res, next) => {
     const checkIn = new Date(req.body.checkIn);
     const checkOut = new Date(req.body.checkOut);
     console.log(checkIn, checkOut)
     try {
         const resposta = await feedback(req.body.email, req.body.comentario, ["123"], checkIn, checkOut);
-        
-        if(resposta){
-            res.status(201).json({msg: "Feedback cadastrado"})
+
+        if (resposta) {
+            res.status(201).json({ msg: "Feedback cadastrado" })
         }
-        else{
-            res.status(400).json({error: "Erro, já existe feedback e\ou dados invalidos"})
+        else {
+            res.status(400).json({ error: "Erro, já existe feedback e\ou dados invalidos" })
         }
     }
-    catch { 
-        res.json({msg: "Erro no servidor"})
+    catch {
+        res.json({ msg: "Erro no servidor" })
     }
 })
 

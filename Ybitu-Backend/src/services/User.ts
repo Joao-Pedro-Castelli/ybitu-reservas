@@ -6,7 +6,7 @@ import bcrypt from "bcryptjs";
 export const createUser = async (props: SignupInput) => {
 
     const salt = bcrypt.genSaltSync()
-    const hash = bcrypt.hashSync(props.senha,salt)
+    const hash = bcrypt.hashSync(props.senha, salt)
 
     const adult = await prisma.adulto.findUnique({
         where: {
@@ -68,11 +68,11 @@ export const loginUser = async (props: LoginInput) => {
         }
     });
 
-    if(!adult?.user?.senha){
+    if (!adult?.user?.senha) {
         return false;
     }
 
-    if (bcrypt.compareSync(props.senha,adult?.user?.senha)) {
+    if (bcrypt.compareSync(props.senha, adult?.user?.senha)) {
         return true
     }
 
@@ -91,6 +91,32 @@ export const userData = async (email: string) => {
     })
 
     return user;
+}
+
+export const userBooking = async (email: string) => {
+    //Procura por um adulto que tenha o email indicado
+    const adulto = await prisma.adulto.findUnique({
+        where: {
+            email
+        },
+        include: {
+            user: true,
+            pessoa: true
+        }
+    })
+    if (!adulto || !adulto.user || !adulto.pessoa) {
+        return [];
+    }
+    // Procura reservas  com base se o checkin é maior que a data atual
+    const reservas = await prisma.reserva.findMany({
+        where: {
+            idUser: adulto?.idPessoa,
+            checkIn: {
+                gte: new Date()
+            }
+        }
+    })
+    return reservas;
 }
 
 export const feedback = async (email: string, comentario: string, fotos: string[], checkIn: Date, checkOut: Date) => {
@@ -120,7 +146,7 @@ export const feedback = async (email: string, comentario: string, fotos: string[
                 feedbackUser: true
             }
         })
-        if (reservas.length != 0 ) { 
+        if (reservas.length != 0) {
             for (let reserva of reservas) {
                 // Se ja tem feedback retorna
                 if (reserva.feedbackUser) {
@@ -156,14 +182,14 @@ export const feedback = async (email: string, comentario: string, fotos: string[
         }
     })
     // Se não for acompanhante retorna
-    if(acompanhantes.length == 0){ 
+    if (acompanhantes.length == 0) {
         return false;
     }
 
     let flag = 0;
     for (const acompanhante of acompanhantes) {
         if (acompanhante.reserva.checkIn.getTime() === checkIn.getTime() && acompanhante.reserva.checkOut.getTime() === checkOut.getTime()) {
-            flag =1;
+            flag = 1;
             if (acompanhante.feedback) {
                 return false;
             }
@@ -186,7 +212,7 @@ export const feedback = async (email: string, comentario: string, fotos: string[
     }
 
     // Se não encontrou reserva que foi acompanhante
-    if(flag == 0){
+    if (flag == 0) {
         return false;
     }
     return true;
