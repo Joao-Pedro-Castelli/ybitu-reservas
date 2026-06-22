@@ -5,18 +5,17 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router";
 
 export default function MinhasReservas() {
-    const { logout, userEmail } = useAuth()
+    const { isLoggedIn } = useAuth()
     const [booking, setBooking] = useState([])
     const navigate = useNavigate();
     useEffect(() => {
         const bookingHandler = async () => {
-            if (userEmail != "") {
+            if (isLoggedIn) {
                 const response = await fetch(`http://localhost:3000/user/booking`, { credentials: "include" });
                 const data = await response.json()
                 setBooking(data.booking);
             }
             else {
-                logout();
                 navigate("/login");
             }
 
