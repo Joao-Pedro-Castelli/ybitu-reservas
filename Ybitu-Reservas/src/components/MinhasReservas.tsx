@@ -10,7 +10,7 @@ export default function MinhasReservas() {
     useEffect(() => {
         const bookingHandler = async () => {
             if (userEmail != "") {
-                const response = await fetch(`http://localhost:3000/user/booking?email=matheuspires2100@gmail.com`);
+                const response = await fetch(`http://localhost:3000/user/booking`,{credentials:"include"});
                 const data = await response.json()
                 setBooking(data.booking);
             }
