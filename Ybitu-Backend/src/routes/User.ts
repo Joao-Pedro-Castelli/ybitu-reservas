@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { createUser, feedback, loginUser, userBooking, userData } from "../services/User.js";
 import { type LoginInput, isSignupInput } from "../types.js";
-import jwt from "jsonwebtoken";
+import jwt, { type JwtPayload } from "jsonwebtoken";
 import multer from "multer"
 import path from "path"
 import { Auth } from "../middlewares/Auth.js";
@@ -78,9 +78,11 @@ router.get("/data",Auth.private, async (req: { query: { email: string } }, res) 
     }
 });
 
-router.get("/booking", async (req: { query: { email: string } }, res) => {
+router.get("/booking",Auth.private, async (req, res) => {
     try {
-        let resposta = await userBooking(req.query.email);
+        const token = req.cookies.token;
+        const content = jwt.verify(token, process.env.JWT_SECRET_KEY as string) as JwtPayload;
+        let resposta = await userBooking(content.email);
         console.log(resposta);
         return res.status(201).json({ booking: resposta });
     }
