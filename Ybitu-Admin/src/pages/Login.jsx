@@ -2,7 +2,6 @@ import { useState } from "react";
 import { api } from "../hooks/api";
 import CadastroImg from "../assets/cadastro.png";
 import { Link } from "react-router";
-import Cadastro from "./Cadastro.jsx";
 
 export default function Login() {
     const [email, setEmail] = useState("");

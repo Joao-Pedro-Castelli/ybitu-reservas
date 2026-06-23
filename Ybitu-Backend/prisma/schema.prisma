@@ -51,6 +51,7 @@ model User {
   // Colunas tabela user
   idAdulto Int    @id
   senha    String
+  admin    Boolean @default(false)
   // Relação com as demais tabelas
   adulto Adulto @relation(fields: [idAdulto], references: [idPessoa])
   reservas Reserva[]
