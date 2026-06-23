@@ -1,31 +1,52 @@
 import "../styles/Contato.css";
-export default function ContactForm() {    
+import { useState } from "react";
+export default function ContactForm() {
+    const [nome, setNome] = useState("")
+    const [telefone, setTelefone] = useState("+")
+    const [email, setEmail] = useState("")
+    const [comentario, setComentario] = useState("")
+
+    const handleContactSubmit = async (e)=>{
+        e.preventDefault();
+
+        const response = await fetch("http://localhost:3000/email", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                nome,
+                email,
+                telefone,
+                comentario
+            })
+        })
+        const data =  await response.json()
+        console.log(data);
+        
+    }
     return (
         <>
             <form className="form_contato">
                 <div className="lg:col-span-2 mb-4"><img src="src/assets/logo_branca.png" alt="" width="50" /></div>
-                <div className="form_element_contato">
+                <div className="form_element_contato lg:col-span-2">
                     <label htmlFor="">Nome</label>
-                    <input className="input_contato" type="text" placeholder="Insira o nome" />
-                </div>
-                <div className="form_element_contato" >
-                    <label htmlFor="">Sobrenome</label>
-                    <input className="input_contato" type="text" placeholder="Insira o sobrenome" />
+                    <input onChange={(e)=>{setNome(e.target.value)}} className="input_contato" type="text" placeholder="Insira o nome" />
                 </div>
                 <div className="form_element_contato">
                     <label htmlFor="">Telefone</label>
-                    <input className="input_contato" type="text" placeholder="Insira seu telefone" />
+                    <input onChange={(e)=>{setTelefone(e.target.value)}} value={telefone} className="input_contato" type="text" placeholder="Insira seu telefone" />
                 </div>
                 <div className="form_element_contato">
                     <label htmlFor="">E-mail</label>
-                    <input className="input_contato" type="text" placeholder="Insira seu e-mail" />
+                    <input onChange={(e)=>{setEmail(e.target.value)}} className="input_contato" type="text" placeholder="Insira seu e-mail" />
                 </div>
                 <div className="form_element_contato lg:col-span-2">
                     <label htmlFor="">Mensagem</label>
-                    <textarea className=" textarea_contato" name="" id="" placeholder="Insira sua mensagem"></textarea>
+                    <textarea onChange={(e)=>{setComentario(e.target.value)}} className=" textarea_contato" name="" id="" placeholder="Insira sua mensagem"></textarea>
                 </div>
                 <div className="form_element_contato">
-                    <button className="mt-6 p-3  w-fit btn_primary">Enviar mensagem</button>
+                    <button onClick={handleContactSubmit} className="mt-6 p-3  w-fit btn_primary">Enviar mensagem</button>
                 </div>
             </form>
         </>
