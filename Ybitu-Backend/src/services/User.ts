@@ -84,9 +84,14 @@ export const userData = async (email: string) => {
         where: {
             email: email
         },
-        include: {
-            pessoa: true,
-            user: true
+        select: {
+            email: true,
+            pessoa: {
+                select:{
+                    nome:true,
+                    dataNasc: true
+                }
+            },
         }
     })
 
@@ -127,13 +132,41 @@ export const userBooking = async (email: string) => {
 
 type dataType = {
     email: string
-    senha: string
     nome: string
     dataNasc: string
 }
 
 export const alterData = async (id:number,newData:dataType)=>{
 
+    const adulto = await prisma.adulto.findUnique({
+        where: {
+            email: newData.email,
+        },
+        select:{
+            idPessoa:true,
+        }
+    })
+
+    if(adulto != null && adulto.idPessoa != id){
+        return false;
+    }
+
+    await prisma.pessoa.update({
+        where:{
+            id
+        },
+        data:{
+            nome: newData.nome,
+            dataNasc: new Date(newData.dataNasc),
+            adulto:{ 
+                update:{
+                    email: newData.email
+                }
+            }
+        }
+    })
+
+    return true;
 }
 
 export const feedback = async (email: string, comentario: string, fotos: string[], checkIn: Date, checkOut: Date) => {

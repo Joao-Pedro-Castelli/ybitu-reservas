@@ -122,10 +122,37 @@ router.post("/feedback", upload.array("photos", 3), async (req, res, next) => {
     }
 })
 
-router.post("/alterData",Auth.private,async (req,res)=>{
+router.post("/alterData", async (req, res) => {
+    console.log("entrei aqui");
     const token = req.cookies.token;
     const content = jwt.verify(token, process.env.JWT_SECRET_KEY as string) as JwtPayload;
-    alterData(content.id);
+
+    console.log(req.body);
+    try {
+        const success = await alterData(content.id, {
+            email: req.body.email,
+            nome: req.body.nome,
+            dataNasc: req.body.dataNasc
+        });
+        if (success) {
+            const token2 = jwt.sign({ email: req.body.email, id: content.id }, secret, { expiresIn: "30m" });
+            res.cookie("token", token2, {
+                httpOnly: true,
+                secure: true,
+                sameSite: "strict",
+                maxAge: 30 * 60 * 1000
+            })
+            res.status(200).json("Alteração realizada com sucesso!")
+        }
+        else{
+            console.log(success);
+            res.status(400).json("Email já está sendo utilizado")
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ msg: "Erro no servidor" })
+    }
+
 })
 
 export default router;
