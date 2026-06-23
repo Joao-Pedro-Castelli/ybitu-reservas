@@ -3,7 +3,6 @@ import QuartoTriploImage from "../assets/quartos/QuartoTriplo.jpeg";
 import QuartoQuadruploImage from "../assets/quartos/QuartoQuadruplo.jpeg";
 import { Splide, SplideSlide, type SplideProps } from "@trg69/react-splide";
 import { Minus, Plus } from "lucide-react";
-import BarraProgresso from "../components/BarraProgresso";
 
 // import css
 import "@trg69/react-splide/css";
@@ -150,8 +149,6 @@ export default function Quartos() {
 
   return (
     <>
-      <BarraProgresso step={1}/>
-
       <h2>Escolha os quartos e a quantidade que serão reservados:</h2>
 
       <Splide {... splide_config}>

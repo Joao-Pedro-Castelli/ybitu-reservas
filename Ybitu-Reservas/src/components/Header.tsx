@@ -22,7 +22,7 @@ export default function Header() {
     const publicLinks = [
         { to: "/", label: "Home" },
         { to: "/Pousada", label: "Pousada Ybitu" },
-        { to: "/Data", label: "Reserva" },
+        { to: "/Reserva/Data", label: "Reserva" },
         { to: "/Contato", label: "Contato" },
     ];
 

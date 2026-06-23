@@ -1,5 +1,4 @@
 // project components
-import BarraProgresso from "../components/BarraProgresso";
 import PopUp, { type PopUpState } from "../components/PopUp.tsx";
 import { type ResumoData, type stateOp, type ReservaID } from "../types.ts";
 // external libraries
@@ -89,8 +88,6 @@ export default function Pagamento() {
 
   return (
   <>  
-    <BarraProgresso step={3} />
-
     <main id="pagamento-main">
       <section>
         <h2>Como concluir a reserva</h2>
@@ -110,7 +107,7 @@ export default function Pagamento() {
         </p>
         <p>Caso queira adicionar mais quartos clique no botão abaixo:</p>
 
-        <a href="Quartos" id="maisquartos" className="mouse-reaction">Adicionar mais quartos</a>
+        <a href="Data" id="maisquartos" className="mouse-reaction">Adicionar mais quartos</a>
       </section>
 
       <aside>

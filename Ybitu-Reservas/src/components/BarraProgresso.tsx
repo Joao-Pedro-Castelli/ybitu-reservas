@@ -2,19 +2,23 @@ import type { JSX } from "react";
 
 import "../styles/BarraProgresso.scss"
 
-// if you change the number of steps, change etapa_position if statement
-export default function BarraProgresso(prop: {step: 0 | 1 | 2 | 3 }) {
+const steps_list: string[] = ["Data", "Quartos", "Hóspedes", "Pagamento"];
+
+export default function BarraProgresso(prop: {step: string }) {
   type status = "done" | "on-going" | "not-yet"
 
-  const steps_list: string[] = ["Data", "Quartos", "Hóspedes", "Pagamento"];
-  const last_step = steps_list.length - 1;
+  let step_index = steps_list.findIndex((it) => it == prop.step);
+  if (step_index == -1) {
+      console.log(`Deu ruim no step = ${prop.step}  em BarraProgresso`)
+    step_index = 0;
+  }
   
   const steps_divs: JSX.Element[] = steps_list.map((step_name, i) => {
     let etapa_status: status = "done";
-    if (i == prop.step) {
+    if (i == step_index) {
       etapa_status = "on-going";
     }
-    if (i > prop.step) {
+    if (i > step_index) {
       etapa_status = "not-yet";
     }
 
@@ -22,7 +26,7 @@ export default function BarraProgresso(prop: {step: 0 | 1 | 2 | 3 }) {
     if (i == 0) {
       etapa_position = "first";
     }
-    if (i == last_step) {
+    if (i == steps_list.length - 1) {
       etapa_position = "last";
     }
 
@@ -34,10 +38,10 @@ export default function BarraProgresso(prop: {step: 0 | 1 | 2 | 3 }) {
 
   const move_page = (to: "prev" | "next") => {
     if (to == "prev") {
-      window.location.href = steps_list[prop.step - 1];
+      window.location.href = "/Reserva/" + steps_list[step_index - 1];
     }
     if (to == "next") {
-      window.location.href = steps_list[prop.step + 1];
+      window.location.href = "/Reserva/" + steps_list[step_index + 1];
     }
     return;
   }
@@ -47,17 +51,17 @@ export default function BarraProgresso(prop: {step: 0 | 1 | 2 | 3 }) {
     <div className="reserva-header mt-18">
       <h1>Reserva em andamento</h1>
       <div id="progresso">
-        {prop.step != 0 && <button id="etapas-prev" className="mouse-reaction" onClick={() => move_page("prev")} />}
+        {step_index != 0 && <button id="etapas-prev" className="mouse-reaction" onClick={() => move_page("prev")} />}
 
         <article id="barra" className="hidden xl:flex">
           {steps_divs}
         </article>
 
         <article id="mini" className="flex xl:hidden">
-          <h2>{steps_list[prop.step]}</h2>
+          <h2>{steps_list[step_index]}</h2>
         </article>
 
-        {prop.step != last_step && <button id="etapas-next" className="mouse-reaction" onClick={() => move_page("next")} />}
+        {step_index != steps_list.length - 1 && <button id="etapas-next" className="mouse-reaction" onClick={() => move_page("next")} />}
       </div>
     </div>
   )

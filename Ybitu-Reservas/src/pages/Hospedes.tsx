@@ -1,5 +1,4 @@
 // internal components
-import BarraProgresso from "../components/BarraProgresso";
 import { HospedeType, hTypeToString, type stateOp } from "../types.ts";
 
 import { useState } from "react";
@@ -147,8 +146,6 @@ export default function Hospedes() {
 
   return (
     <>
-      <BarraProgresso step={2} />
-
       <h1 className="mb-6">Preencha os dados dos hóspedes:</h1>
       <div id="hospede-div">
         <div id="hospede-main">

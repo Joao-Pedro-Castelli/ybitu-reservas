@@ -28,7 +28,6 @@ export default function Datas() {
 
     return (
         <>
-            <BarraProgresso step={0} />
             <div className="container mx-auto min-h-screen p-4 md:p-6 flex flex-col items-center">
                 <p className="text-lg md:text-2xl font-medium text-gray-700 mb-6 self-center text-center">
                     Selecione o período da sua estadia:

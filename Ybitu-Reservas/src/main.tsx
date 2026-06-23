@@ -4,17 +4,21 @@ import { BrowserRouter, Route, Routes } from "react-router";
 
 import Header from "./components/Header.tsx";
 import Footer from "./components/Footer.tsx";
-import Login from "./pages/Login.tsx";
+
 import Home from "./pages/Home.tsx";
 import Cadastro from "./pages/Cadastro.tsx";
+import Login from "./pages/Login.tsx";
+import Usuario from "./pages/Usuario.tsx";
+
+import ReservaRoutePage from "./pages/Reserva.tsx";
+import Datas from "./pages/Datas.tsx";
 import Quartos from "./pages/Quartos.tsx";
 import Hospedes from "./pages/Hospedes.tsx";
 import Pagamento from "./pages/Pagamento.tsx";
+
 import Feedback from "./pages/Feedback.tsx";
 import Contato from "./pages/Contato.tsx";
-import Datas from "./pages/Datas.tsx";
 import NotFound from "./pages/NotFound.tsx";
-import Usuario from "./pages/Usuario.tsx";
 import { AuthProvider } from "./context/AuthContext"
 
 import "./styles/style.scss"
@@ -31,10 +35,14 @@ createRoot(document.getElementById("root")!).render(
               <Route path="Contato" element={<Contato />} />
               <Route path="Cadastro" element={<Cadastro />} />
               <Route path="Login" element={<Login />} />
-              <Route path="Data" element={<Datas />} />
-              <Route path="Quartos" element={<Quartos />} />
-              <Route path="Hóspedes" element={<Hospedes />} />
-              <Route path="Pagamento" element={<Pagamento />} />
+
+              <Route path="Reserva" element={<ReservaRoutePage />}>
+                <Route path="Data" element={<Datas />} />
+                <Route path="Quartos" element={<Quartos />} />
+                <Route path="Hóspedes" element={<Hospedes />} />
+                <Route path="Pagamento" element={<Pagamento />} />
+              </Route>
+
               <Route path="Feedback" element={<Feedback />} />
               <Route path="Usuario" element={<Usuario />} />
               <Route path="*" element={<NotFound/>}></Route>
