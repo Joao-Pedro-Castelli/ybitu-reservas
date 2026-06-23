@@ -50,6 +50,7 @@ const duvidaSchema = zod.object({
 
 MainRouter.post("/email", (req, res) => { 
   console.log(req.body)
+
   try {
     let answerData = duvidaSchema.parse(req.body);
 
@@ -81,6 +82,7 @@ MainRouter.post("/email", (req, res) => {
       console.log("Validação do answerData falhou");
       console.log(error.issues);
     }
+    res.status(400).json(error)
   }
 });
 
