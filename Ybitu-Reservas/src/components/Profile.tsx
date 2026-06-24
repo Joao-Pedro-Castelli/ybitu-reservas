@@ -15,7 +15,7 @@ export default function Profile({ user }: { user: userProps }) {
 
     const alterDataHandler = async (e) => {
         e.preventDefault();
-        await fetch("http://localhost:3000/user/alterData", {
+        const res = await fetch("http://localhost:3000/user/alterData", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -28,6 +28,16 @@ export default function Profile({ user }: { user: userProps }) {
             }),
             credentials: "include"
         });
+
+        if (res.ok) {
+            alert("Dados alterados com sucesso!")
+            setTimeout(() => {
+                window.location.reload();
+            }, 100);
+        }
+        else{
+            alert("Email já esta sendo utilizado. Verifique os dados e tente novamente")
+        }
     }
 
     return (
@@ -51,7 +61,7 @@ export default function Profile({ user }: { user: userProps }) {
                     <input onChange={(e) => {
                         if (e.target.value === "") {
                             setNome(user.nome)
-                        }else{
+                        } else {
                             setNome(e.target.value)
                         }
                     }} required className="user_form_option" type="text" id="nome" placeholder={`${user.nome}`} />
@@ -63,7 +73,7 @@ export default function Profile({ user }: { user: userProps }) {
                             if (e.target.value === "") {
                                 setEmail(user.email)
                             }
-                            else{
+                            else {
                                 setEmail(e.target.value)
                             }
                         }} required className="user_form_option" type="email" id="email" placeholder={`${user.email}`} />
