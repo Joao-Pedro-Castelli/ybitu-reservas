@@ -15,7 +15,7 @@ export default function Profile({ user }: { user: userProps }) {
 
     const alterDataHandler = async (e) => {
         e.preventDefault();
-        const confirmed = window.confirm("Tem certeza que deseja realizar essa ação");
+        const confirmed = window.confirm("Tem certeza que deseja realizar essa ação?");
 
         if (!confirmed) {
             return;
@@ -46,6 +46,22 @@ export default function Profile({ user }: { user: userProps }) {
         }
     }
 
+    const deleteAccountHandler = async () => {
+        const confirmed = window.confirm("Tem certeza que deseja apagar sua conta? Após isso não haverá mais volta.")
+
+        if (confirmed) {
+            const res = await fetch("http://localhost:3000/user/delete", { credentials: "include" })
+            if (res.ok) {
+                alert("Dados alterados com sucesso!")
+                setTimeout(() => {
+                    window.location.reload();
+                }, 100);
+            }
+            else{
+                alert("Erro ao deletar a conta. Tente novamente mais tarde.")
+            }
+        }
+    }
 
     return (
         <>
@@ -59,7 +75,7 @@ export default function Profile({ user }: { user: userProps }) {
                         </div>
 
                     </div>
-                    <button className="cursor-pointer p-2 w-fit h-fit rounded bg-red-500 font-bold text-[var(--cor-background)] ">Apagar conta</button>
+                    <button onClick={deleteAccountHandler} className="cursor-pointer p-2 w-fit h-fit rounded bg-red-500 font-bold text-[var(--cor-background)] ">Apagar conta</button>
                 </div>
             </div>
             <form id="profForm" onSubmit={alterDataHandler} className="mt-10 grid grid-cols-2 max-w-fit gap-10  mx-auto" action="">
