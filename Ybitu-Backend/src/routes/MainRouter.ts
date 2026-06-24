@@ -4,6 +4,8 @@ import nodemailer from "nodemailer";
 import adminRouter from "./Admin.js";
 import * as zod from "zod"
 import jwt from "jsonwebtoken"
+import type { Request, Response } from "express";
+import type { BookingData } from "../types.js";
 
 import userRouter from "./User.js";
 
@@ -83,7 +85,7 @@ MainRouter.post("/email", (req, res) => {
       res.json({ msg: "Deu problema na requisição" })
     })
   }
-  catch (error: any){
+  catch (error: any) {
     console.log("Erro em MainRouter");
     if (error instanceof zod.ZodError) {
       console.log("Validação do answerData falhou");
@@ -93,5 +95,52 @@ MainRouter.post("/email", (req, res) => {
   }
 });
 
+MainRouter.post("/bookingrequest", (req: Request<{}, {}, BookingData>, res: Response) => {
+  try {
+    transporter.sendMail({
+      from: process.env.GMAIL_ACCOUNT,
+      to: process.env.GMAIL_ACCOUNT,
+      replyTo: req.body.user.email,
+      subject: "NOVA SOLICITAÇÃO DE RESERVA!",
+      text: `
+        Nova solicitação de reserva feita por ${req.body.user.name}.
+
+        Dados de contato do responsável: ${req.body.user.phoneNumber}, ${req.body.user.email}
+
+        Dados dos acompanhantes do responsável:
+
+        ${req.body.otherGuests.map((guest, index) => {
+          return(`
+            ${index}. ${guest.name}:
+              Aniversário: ${guest.birthDate},
+              Telefone: ${guest.phoneNumber},
+              sexo: ${guest.sex}
+              Pais \ responsáveis: ${guest.parentName ? guest.parentName : "--"}
+
+            `)
+      })}
+        CHECK-IN: ${req.body.date_in} \ CHECK-OUT: ${req.body.date_out}
+
+        Quartos:
+        ${req.body.rooms.map((room) => {
+        return (`${room.roomNumber} -- ${room.roomType.rType}`)
+      })}
+      `
+    }).then(() => {
+      res.status(200).json({ msg: "Deu Certooo" })
+    }).catch(err => {
+      console.log(err)
+      res.json({ msg: "Deu problema na requisição" })
+    })
+  }
+  catch (error: any) {
+    console.log("Erro em MainRouter");
+    if (error instanceof zod.ZodError) {
+      console.log("Validação do answerData falhou");
+      console.log(error.issues);
+    }
+    res.status(400).json(error)
+  }
+})
 
 export default MainRouter;
