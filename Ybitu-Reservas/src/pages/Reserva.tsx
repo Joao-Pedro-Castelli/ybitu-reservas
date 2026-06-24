@@ -37,6 +37,9 @@ import { useAuth } from "../context/AuthContext.tsx";
 //   ]
 // }
 
+function isValidDate(date: Date): boolean {
+  return !isNaN(date.getTime());
+}
 
 export default function ReservaRoutePage() {
   const [reservas, setReservas] = useState({} as BookingContext);
@@ -47,12 +50,13 @@ export default function ReservaRoutePage() {
         if (isLoggedIn == true) {
           const response = await fetch(`http://localhost:3000/user/data`, {credentials:"include"});
           const data: UserServerData = await response.json();
+          let uuid = crypto.randomUUID();
           setReservas({
-            currentID: crypto.randomUUID(),
+            currentID: uuid,
             bookings: [{
-              id: crypto.randomUUID(),
-              date_in: new Date(),
-              date_out: new Date(),
+              id: uuid,
+              date_in: new Date("foo"),
+              date_out: new Date("bar"),
               user: {
                 id: crypto.randomUUID(),
                 guestType: GuestType.User,
@@ -87,6 +91,10 @@ export default function ReservaRoutePage() {
   const confirmStep = () => {
     switch(curStep){
       case "Data":
+        if (!isValidDate(findBooking(reservas.currentID, reservas.bookings).date_in) || !isValidDate(findBooking(reservas.currentID, reservas.bookings).date_out)) {
+          window.alert("A data deve ser selecionada!");
+          return false;
+        }
         break;
       case "Quartos":
         if (findBooking(reservas.currentID, reservas.bookings).rooms.length == 0) {
@@ -104,8 +112,8 @@ export default function ReservaRoutePage() {
   
   return(
     <>
-      <BarraProgresso step={curStep} confirmStep={confirmStep} />
-      <Outlet context={[reservas, setReservas]}/>
+      {isLoggedIn && <BarraProgresso step={curStep} confirmStep={confirmStep} />}
+      {isLoggedIn && <Outlet context={[reservas, setReservas]} />}
     </>
   );
 };
