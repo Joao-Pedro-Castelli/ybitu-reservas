@@ -69,8 +69,8 @@ export default function Pagamento() {
 
   // whether the popup for confirmation of deletion should be open
   // and what item called it
-  const [popDelete, setPopDelete] = useState({ isOpen: false, data: {id: 0}} as PopUpState<BookingID>);
-  const [popEdit, setPopEdit] = useState({ isOpen: false, data: {id: 0}} as PopUpState<BookingID>);
+  const [popDelete, setPopDelete] = useState({ isOpen: false, data: {id: ""}} as PopUpState<BookingID>);
+  const [popEdit, setPopEdit] = useState({ isOpen: false, data: {id: ""}} as PopUpState<BookingID>);
 
   // when the user clicks the trash button, remove the element from the list
   const deleteResumo = (isDel: boolean) => {
@@ -81,14 +81,14 @@ export default function Pagamento() {
       })
     }
 
-    setPopDelete({isOpen: false, data: {id: 0}});
+    setPopDelete({isOpen: false, data: {id: ""}});
   };
 
   const editResumo = (isEdit: boolean) => {
     if (isEdit) {
       window.location.href = "quartos";
     }
-    setPopEdit({isOpen: false, data: {id: 0}});
+    setPopEdit({isOpen: false, data: {id: ""}});
   }
 
   return (

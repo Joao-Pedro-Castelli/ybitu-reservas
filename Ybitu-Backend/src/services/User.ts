@@ -73,7 +73,7 @@ export const loginUser = async (props: LoginInput) => {
     }
 
     if (bcrypt.compareSync(props.senha, adult?.user?.senha)) {
-        return [adult.idPessoa, adult.user.admin]
+        return [adult.idPessoa, adult.user.admin,adult.pessoa.nome]
     }
 
     return null;
@@ -86,10 +86,13 @@ export const userData = async (email: string) => {
         },
         select: {
             email: true,
+            telefone:true,
             pessoa: {
                 select:{
                     nome:true,
-                    dataNasc: true
+                    dataNasc: true,
+                    sexo:true,
+
                 }
             },
         }

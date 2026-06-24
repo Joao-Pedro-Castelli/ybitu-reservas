@@ -1,5 +1,5 @@
 // internal components
-import { GuestType, hTypeToString, type UseBookCont, type GuestData, type stateOp, toSex } from "../types.ts";
+import { GuestType, hTypeToString, type UseBookCont, type GuestData, type stateOp, toSex, type BookingData } from "../types.ts";
 
 import { useState } from "react";
 import { Trash } from "lucide-react";
@@ -42,6 +42,14 @@ function HospInputSelect(props: {title: string, options: string[], field: string
   )
 }
 
+function handlePhoneNumber(value: string, changeFn: stateOp<GuestData>, data: GuestData) {
+  if (value.length < 20 && /^\+(\d*|\d+\(\d*\)?|\d+\(\d+\)\d*\-?\d*)$/g.test(value)) {
+    changeFn({ ...data, phoneNumber: value });
+    console.log("a");
+  }
+  return;
+}
+
 function ResponsavelDados(props: { data: GuestData, changeFn: stateOp<GuestData> }) {
   return(
     <main className="hospede-dados">
@@ -49,10 +57,10 @@ function ResponsavelDados(props: { data: GuestData, changeFn: stateOp<GuestData>
       <HospInput title={"Nome"} iType={"text"} field={props.data.name} changeFn={(v) => props.changeFn({...props.data, name: v})}/>
       <HospInput title={"Email"} iType={"email"} field={props.data.email} changeFn={(v) => props.changeFn({...props.data, email: v})}/>
       <div className="two-hosp-inputs">
-        <HospInput title={"Data de nascimento"} iType={"date"} field={props.data.birthDate.toDateString()} changeFn={(v) => props.changeFn({...props.data, birthDate: new Date(v)})}/>
+        <HospInput title={"Data de nascimento"} iType={"date"} field={props.data.birthDate.toISOString().split("T")[0]} changeFn={(v) => props.changeFn({...props.data, birthDate: new Date(v)})}/>
         <HospInputSelect title={"Sexo"} options={["Masculino", "Feminino"]} field={props.data.sex} changeFn={(v) => props.changeFn({...props.data, sex: toSex(v)})}/>
       </div>
-      <HospInput title={"Telefone"} iType={"tel"} field={props.data.phoneNumber} changeFn={(v) => props.changeFn({...props.data, phoneNumber: v})}/>
+      <HospInput title={"Telefone"} iType={"tel"} field={props.data.phoneNumber} changeFn={(v) => handlePhoneNumber(v, props.changeFn, props.data)}/>
     </main>
   );
 }
@@ -64,10 +72,10 @@ function AdultoDados(props: {data: GuestData, changeFn: stateOp<GuestData> }) {
       <HospInput title={"Nome"} iType={"text"} field={props.data.name} changeFn={(v) => props.changeFn({...props.data, name: v})}/>
       <HospInput title={"Email"} iType={"email"} field={props.data.email} changeFn={(v) => props.changeFn({...props.data, email: v})}/>
       <div className="two-hosp-inputs">
-        <HospInput title={"Data de nascimento"} iType={"date"} field={props.data.birthDate.toDateString()} changeFn={(v) => props.changeFn({...props.data, birthDate: new Date(v)})}/>
+        <HospInput title={"Data de nascimento"} iType={"date"} field={props.data.birthDate.toISOString().split("T")[0]} changeFn={(v) => props.changeFn({...props.data, birthDate: new Date(v)})}/>
         <HospInputSelect title={"Sexo"} options={["Masculino", "Feminino"]} field={props.data.sex} changeFn={(v) => props.changeFn({...props.data, sex: toSex(v)})}/>
       </div>
-      <HospInput title={"Telefone"} iType={"tel"} field={props.data.phoneNumber} changeFn={(v) => props.changeFn({...props.data, phoneNumber: v})}/>
+      <HospInput title={"Telefone"} iType={"tel"} field={props.data.phoneNumber} changeFn={(v) => handlePhoneNumber(v, props.changeFn, props.data)}/>
     </main>
   );
 }
@@ -78,7 +86,7 @@ function CriancaDados(props: {data: GuestData, changeFn: stateOp<GuestData> }) {
       <h2>Criança</h2>
       <HospInput title={"Nome"} iType={"text"} field={props.data.name} changeFn={(v) => props.changeFn({...props.data, name: v})}/>
       <div className="two-hosp-inputs">
-        <HospInput title={"Data de nascimento"} iType={"date"} field={props.data.birthDate.toDateString()} changeFn={(v) => props.changeFn({...props.data, birthDate: new Date(v)})}/>
+        <HospInput title={"Data de nascimento"} iType={"date"} field={props.data.birthDate.toISOString().split("T")[0]} changeFn={(v) => props.changeFn({...props.data, birthDate: new Date(v)})}/>
         <HospInputSelect title={"Sexo"} options={["Masculino", "Feminino"]}  field={props.data.sex} changeFn={(v) => props.changeFn({...props.data, sex: toSex(v)})}/>
       </div>
       <HospInput title={"Nome do responsável"} iType={"text"} field={props.data.parentName} changeFn={(v) => props.changeFn({...props.data, parentName: v})}/>
@@ -122,11 +130,19 @@ function hospSelDisplay(selected: GuestData, changeFn: stateOp<GuestData>) {
   }
 }
 
+function findBooking(id: string, list: BookingData[]): BookingData {
+  let element = list.find((book) => book.id == id);
+  if (element == undefined) {
+    return list[0];
+  }
+  return element;
+}
+
 export default function Hospedes() {
   const [reservas, setReservas] = useOutletContext<UseBookCont>();
-  const [hospSelected, setHospSelected] = useState(reservas.bookings[reservas.currentID].user.id);
+  const [hospSelected, setHospSelected] = useState(findBooking(reservas.currentID, reservas.bookings).user.id);
 
-  const hospList = [reservas.bookings[reservas.currentID].user].concat(reservas.bookings[reservas.currentID].otherGuests);
+  const hospList = [findBooking(reservas.currentID, reservas.bookings).user].concat(findBooking(reservas.currentID, reservas.bookings).otherGuests);
 
   function removeHosp(id: string) {
     if (hospSelected == id) {
@@ -205,7 +221,7 @@ export default function Hospedes() {
       }),
     });
 
-    setHospSelected(hospSelected + 1);
+    setHospSelected(id);
   }
 
   const changeGuestFn = (data: GuestData) => {
