@@ -15,6 +15,12 @@ export default function Profile({ user }: { user: userProps }) {
 
     const alterDataHandler = async (e) => {
         e.preventDefault();
+        const confirmed = window.confirm("Tem certeza que deseja realizar essa ação");
+
+        if (!confirmed) {
+            return;
+        }
+
         const res = await fetch("http://localhost:3000/user/alterData", {
             method: "POST",
             headers: {
@@ -35,10 +41,11 @@ export default function Profile({ user }: { user: userProps }) {
                 window.location.reload();
             }, 100);
         }
-        else{
+        else {
             alert("Email já esta sendo utilizado. Verifique os dados e tente novamente")
         }
     }
+
 
     return (
         <>
