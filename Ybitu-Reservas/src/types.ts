@@ -1,14 +1,14 @@
 export type stateOp<T> = (c: T) => void;
 
 type BookingContext = {
-  currentID: number,
+  currentID: string,
   bookings: BookingData[],
 }
 
 type UseBookCont = [BookingContext, stateOp<BookingContext>];
 
 type BookingData = {
-  id: number,
+  id: string,
   user: GuestData,
   otherGuests: GuestData[],
   date_in: Date,
@@ -16,7 +16,7 @@ type BookingData = {
   rooms: RoomData[],
 }
 
-type BookingID = { id: number };
+type BookingID = { id: string };
 
 type GuestData = {
   id: string, // not the same as the DB id

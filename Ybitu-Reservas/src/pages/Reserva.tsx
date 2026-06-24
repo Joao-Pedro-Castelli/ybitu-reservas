@@ -8,7 +8,7 @@ const bookingMock: BookingContext = {
   currentID: 0,
   bookings: [
     {
-      id: 0,
+      id: crypto.randomUUID(),
       date_in: new Date("2026-05-30"),
       date_out: new Date("2026-06-04"),
       user: {

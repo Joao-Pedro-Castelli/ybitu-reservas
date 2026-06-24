@@ -1,5 +1,5 @@
 // internal components
-import { GuestType, hTypeToString, type UseBookCont, type GuestData, type stateOp, toSex } from "../types.ts";
+import { GuestType, hTypeToString, type UseBookCont, type GuestData, type stateOp, toSex, type BookingData } from "../types.ts";
 
 import { useState } from "react";
 import { Trash } from "lucide-react";
@@ -130,11 +130,19 @@ function hospSelDisplay(selected: GuestData, changeFn: stateOp<GuestData>) {
   }
 }
 
+function findBooking(id: string, list: BookingData[]): BookingData {
+  let element = list.find((book) => book.id == id);
+  if (element == undefined) {
+    return list[0];
+  }
+  return element;
+}
+
 export default function Hospedes() {
   const [reservas, setReservas] = useOutletContext<UseBookCont>();
-  const [hospSelected, setHospSelected] = useState(reservas.bookings[reservas.currentID].user.id);
+  const [hospSelected, setHospSelected] = useState(findBooking(reservas.currentID, reservas.bookings).user.id);
 
-  const hospList = [reservas.bookings[reservas.currentID].user].concat(reservas.bookings[reservas.currentID].otherGuests);
+  const hospList = [findBooking(reservas.currentID, reservas.bookings).user].concat(findBooking(reservas.currentID, reservas.bookings).otherGuests);
 
   function removeHosp(id: string) {
     if (hospSelected == id) {
@@ -213,7 +221,7 @@ export default function Hospedes() {
       }),
     });
 
-    setHospSelected(hospSelected + 1);
+    setHospSelected(id);
   }
 
   const changeGuestFn = (data: GuestData) => {
