@@ -1,7 +1,5 @@
 import express from "express";
 import { Auth } from "../middlewares/Auth.js";
-import userRouter from "./User.js";
-import quartosRouter from "./QuartosAdmin.js";
 import nodemailer from "nodemailer";
 import * as zod from "zod"
 
